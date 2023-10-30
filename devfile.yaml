@@ -11,7 +11,7 @@ projects:
 components:
   - name: tools
     container:
-      image: quay.io/devfile/universal-developer-image:ubi8-latest
+      image: quay.io/bkozdemb/udi-9
       volumeMounts:
         - name: venv
           path: /home/user/.venv
@@ -25,9 +25,9 @@ components:
 commands:
   - id: run-application
     exec:
-      label: "Display Python version"
+      label: "Create the Python virtual environment"
       component: tools
       workingDir: ${PROJECT_SOURCE}
-      commandLine: "python3 --version"
+      commandLine: "python3 -m venv .venv && source .venv/bin/activate && pip install pip -Uq && pip install -r src/requirements.txt"
       group:
         kind: run

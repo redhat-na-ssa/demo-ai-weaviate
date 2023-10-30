@@ -61,7 +61,7 @@ initContainers:
 # Scale replicas of Weaviate. Note that as of v1.8.0 dynamic scaling is limited
 # to cases where no data is imported yet. Scaling down after importing data may
 # break usability. Full dynamic scalability will be added in a future release.
-replicas: 1
+replicas: 2
 resources: {}
   # requests:
   #   cpu: '500m'
@@ -83,9 +83,9 @@ serviceAccountName:
 
 # The Persistent Volume Claim settings for Weaviate. If there's a
 # storage.fullnameOverride field set, then the default pvc will not be
-# created, instead the one defined in fullnameOverride will be used
+# created, instead the one defined in fullnameOverride will be used. Increase the storage size as needed.
 storage:
-  size: 32Gi
+  size: 2Gi
   storageClassName: ""
 
 # The service controls how weaviate is exposed to the outside world. If you
