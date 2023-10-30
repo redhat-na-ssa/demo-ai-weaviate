@@ -1,0 +1,7 @@
+{
+    "recommendations": [
+        "njpwerner.autodocstring",
+        "huggingface.huggingface-vscode",
+        "ms-python.python"
+    ]
+}
