@@ -5,7 +5,7 @@ projects:
   - name: weaviate
     git:
       remotes:
-        origin: "https://github.com/bkoz/weaviate.git"
+        origin: "https://github.com/redhat-na-ssa/demo-ai-weaviate.git"
       checkoutFrom:
         revision: main
 components:

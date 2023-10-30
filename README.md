@@ -17,7 +17,7 @@
 - Security (Doesn't run your containers as root)
 
 ### Get Started
-- [Open this repo in the Developer Sandbox](https://workspaces.openshift.com/f?url=https://github.com/bkoz/weaviate)
+- [Open this repo in the Developer Sandbox](https://workspaces.openshift.com/f?url=https://github.com/redhat-na-ssa/demo-ai-weaviate)
 
 ### Developer Tools: Eclipse-Che/DevSpaces
 - A full IDE experience with a code debugger.
