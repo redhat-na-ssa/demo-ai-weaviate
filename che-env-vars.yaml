@@ -1,0 +1,16 @@
+kind: Secret
+apiVersion: v1
+metadata:
+  name: che-env-vars
+  labels:
+    controller.devfile.io/mount-to-devworkspace: 'true'
+    controller.devfile.io/watch-secret: 'true'
+  annotations:
+    controller.devfile.io/mount-as: env
+data:
+  HUGGINGFACE_API_KEY: ''
+  OPENAI_API_KEY: ''
+  WEAVIATE_API_KEY: ''
+  WEAVIATE_URL: ''
+type: Opaque
+

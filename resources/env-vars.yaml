@@ -1,0 +1,16 @@
+kind: Secret
+apiVersion: v1
+metadata:
+  name: env-vars
+  labels:
+    controller.devfile.io/mount-to-devworkspace: 'true'
+    controller.devfile.io/watch-secret: 'true'
+  annotations:
+    controller.devfile.io/mount-as: env
+data:
+  HUGGINGFACE_API_KEY: huggingface_api_key
+  OPENAI_API_KEY: openai_api_key
+  WEAVIATE_API_KEY: weaviate_api_key
+  WEAVIATE_URL: http://weaviate.weaviate
+type: Opaque
+

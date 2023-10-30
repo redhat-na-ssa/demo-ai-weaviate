@@ -1,0 +1,33 @@
+schemaVersion: 2.1.0
+metadata:
+  name: weaviate
+projects:
+  - name: weaviate
+    git:
+      remotes:
+        origin: "https://github.com/bkoz/weaviate.git"
+      checkoutFrom:
+        revision: main
+components:
+  - name: tools
+    container:
+      image: quay.io/devfile/universal-developer-image:ubi8-latest
+      volumeMounts:
+        - name: venv
+          path: /home/user/.venv
+      memoryLimit: 2048Mi
+      mountSources: true
+
+  - name: venv
+    volume:
+      size: 10G
+
+commands:
+  - id: run-application
+    exec:
+      label: "Display Python version"
+      component: tools
+      workingDir: ${PROJECT_SOURCE}
+      commandLine: "python3 --version"
+      group:
+        kind: run
