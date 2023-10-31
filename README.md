@@ -47,7 +47,7 @@ helm upgrade --install weaviate weaviate/weaviate --values ./values.yaml
 oc get pods -w
 ```
 ```bash
-curl weaviate.${PROJ} | jq
+curl weaviate | jq
 ```
 7. Run a few python test clients from the `src` directory.
 ```bash
@@ -92,4 +92,4 @@ helm uninstall weaviate
 - As a managed service from any of the major cloud providers.
 
 #### Versions
-v0.1.0
+v0.1.1
