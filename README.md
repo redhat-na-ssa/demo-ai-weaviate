@@ -10,7 +10,7 @@
 - A [HuggingFace API key](https://huggingface.co/settings/tokens).
 - An [OpenAI API key](https://platform.openai.com/account/api-keys).
 
-### Why run Weaviate On Openshift
+### Why run Weaviate On Openshift?
 - Support for [Distributed Architectures](https://weaviate.io/developers/weaviate/concepts/replication-architecture).
 - A Great Developer Experience (Easily move code -> containers)
 - Access your cluster via the Weaviate Cloud Console with external routes.
