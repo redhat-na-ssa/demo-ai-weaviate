@@ -63,7 +63,7 @@ python src/03-gradio.py
 oc new-app python~https://github.com/bkoz/weaviate --context-dir=/src --name=rag
 ```
 
-2. Add the secret to the rag deployment.
+2. Add the secret to the deployment.
 ```bash
 oc set env --from=secret/che-env-vars deployment/rag
 ```
