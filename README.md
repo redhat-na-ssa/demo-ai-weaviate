@@ -38,13 +38,10 @@
 5. **Terminal -> New Terminal**
 6. Use the helm client to **install Weaviate** and wait for the 2 weaviate pods to become ready.
 ```bash
-PROJ=$(oc project -q)
-```
-```bash
 helm repo add weaviate https://weaviate.github.io/weaviate-helm
 ```
 ```bash
-helm upgrade --install weaviate weaviate/weaviate --namespace ${PROJ} --values ./values.yaml
+helm upgrade --install weaviate weaviate/weaviate --values ./values.yaml
 ```
 ```bash
 oc get pods -w
