@@ -33,7 +33,7 @@
 2. Use the Openshift Web UI to **create a secret with environment variables**.
    * **Secrets -> Create** and **Save** a new secret (from yaml) using this [example](resources/che-env.yaml).
    * **Edit ->** Change the values in the secret to match your environment. Your instructor will provide the values.
-3. **Extensions** -> Install the reccomended Python extension.
+3. **Extensions** -> Install the reccomended Python and Openshift extensions.
 4. **View -> Command Pallette** Enter: `run task` -> devfile -> Create the python virtual environment
 5. **Terminal -> New Terminal**
 6. Use the helm client to **install Weaviate** and wait for the 2 weaviate pods to become ready.
