@@ -28,7 +28,7 @@
 - Environment variables are read in as secrets.
 - DevSpaces is a no-cost add-on to Openshift
 
-#### Setup for development: 
+### Setup for development: 
 1. **View -> Command Palette** -> Enter: `dev spaces: open openshift console`.
 2. Use the Openshift Web UI to **create a secret with environment variables**.
    * **Secrets -> Create** and **Save** a new secret (from yaml) using this [example](resources/che-env.yaml).
