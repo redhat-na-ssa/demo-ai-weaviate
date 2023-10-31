@@ -2,6 +2,7 @@
     "recommendations": [
         "njpwerner.autodocstring",
         "huggingface.huggingface-vscode",
-        "ms-python.python"
+        "ms-python.python",
+        "redhat.vscode-openshift-connector"
     ]
 }
