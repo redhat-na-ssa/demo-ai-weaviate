@@ -63,18 +63,12 @@ python src/03-gradio.py
 oc new-app python~https://github.com/bkoz/weaviate --context-dir=/src --name=rag
 ```
 
-2. Create a secret for the application environment variables from the example.
+2. Add the secret to the rag deployment.
 ```bash
-oc apply -f resources/app-env.yaml
-```
-  * Use the web console UI or CLI to edit the values in the secret to reflect your environment.
-
-3. Add the secret to the rag deployment.
-```bash
-oc set env --from=secret/app-env deployment/rag
+oc set env --from=secret/che-env-vars deployment/rag
 ```
 
-4. Expose the app with a route.
+3. Expose the app with a route.
 ```bash
 oc create route edge --service rag --insecure-policy='Redirect'
 ```
@@ -92,4 +86,4 @@ helm uninstall weaviate
 - As a managed service from any of the major cloud providers.
 
 #### Versions
-v0.1.1
+v0.1.2
