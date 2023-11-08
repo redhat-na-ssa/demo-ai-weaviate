@@ -35,7 +35,7 @@ article_schema = {
             "model": "multilingual-22-12",
             "truncate": "RIGHT"
         },
-        "generative-openai":{},
+        "generative-openai":{"model": "gpt-3.5-turbo"},
     },
     "vectorIndexConfig": {
         "distance": "dot"

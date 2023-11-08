@@ -173,6 +173,7 @@ print(json.dumps(response, indent=2))
 - Attaching your search engine outputs to a LLM to generate with!/
 """
 
+print("********* Semantic Search ********")
 bb_res = semantic_search("famous basketball player")
 print_result(bb_res)
 
