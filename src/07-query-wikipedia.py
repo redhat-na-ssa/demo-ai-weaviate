@@ -8,19 +8,16 @@
 import os
 import weaviate
 import json
+import weaviate_utils
+import os
+import logging
+import requests
 
-# TODO > get COHERE_API_KEY and OPENAI_API_KEY
+logging.basicConfig(level=logging.INFO)
 
-auth_config = weaviate.auth.AuthApiKey(api_key='WEAVIATE_API_KEY')
-client = weaviate.Client(
-    url="https://hostname.weaviate.network",
-    auth_client_secret=auth_config,
-    additional_headers={
-        "X-Cohere-Api-Key": os.getenv("COHERE_API_KEY"),
-        "X-OpenAI-Api-Key": os.getenv("OPENAI_API_KEY"),  
-    }
-)
-print(client.is_ready())
+client = weaviate_utils.weaviate_connection()
+logging.info('\nclient.isReady(): %s', client.is_ready())
+logging.info('cluster.get_nodes_status(): %s', client.cluster.get_nodes_status())
 
 
 """## 🔎🔎All the ways you can search your data:🔍🔍

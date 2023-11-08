@@ -49,12 +49,12 @@ oc get pods -w
 ```bash
 curl weaviate | jq
 ```
-7. Run a few python test clients from the `src` directory.
+7. Run a few python test clients from the `src` directory. Clients 06 and 07 are WIP.
 ```bash
 python src/00-test-connection.py
 ```
 ```bash
-python src/03-gradio.py
+python src/05-gradio.py
 ```
 
 ### Move the app into production.
@@ -85,5 +85,3 @@ helm uninstall weaviate
 - Install an [Openshift](https://www.redhat.com/en/technologies/cloud-computing/openshift) cluster and DevSpaces.
 - As a managed service from any of the major cloud providers.
 
-#### Versions
-v0.1.5

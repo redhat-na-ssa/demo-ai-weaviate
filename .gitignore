@@ -9,6 +9,7 @@ __pycache__/
 # Distribution / packaging
 .Python
 build/
+data/wiki_simple_100k.parquet
 develop-eggs/
 dist/
 downloads/

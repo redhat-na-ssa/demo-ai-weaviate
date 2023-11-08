@@ -1,3 +1,5 @@
 weaviate-client
 python-dotenv
 gradio
+pyarrow
+pandas

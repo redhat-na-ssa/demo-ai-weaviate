@@ -53,7 +53,9 @@ def weaviate_connection() -> weaviate.Client:
         auth_client_secret=auth_config,
         additional_headers={
             "X-HuggingFace-Api-Key": HUGGINGFACE_API_KEY,
-            "X-OpenAI-Api-Key" : OPENAI_API_KEY}
+            "X-OpenAI-Api-Key" : OPENAI_API_KEY,
+            "X-Cohere-Api-Key": os.getenv("COHERE_API_KEY")
+            }
         )
     else:
         logging.info('Trying to connect to the Weaviate embedded server')
