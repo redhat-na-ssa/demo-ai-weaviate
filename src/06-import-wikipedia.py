@@ -29,12 +29,16 @@ client.schema.delete_all()
 article_schema = {
     "class": "Article",
     "description": "Wiki Article",
+    # "vectorizer": "text2vec-huggingface",
+    # "moduleConfig": {
+        # "text2vec-huggingface": {},
+        # "model": "sentence-transformers/all-MiniLM-L6-v2",
     "vectorizer": "text2vec-cohere",#multi-lingual
     "moduleConfig": {
         "text2vec-cohere": {
             "model": "multilingual-22-12",
             "truncate": "RIGHT"
-        },
+       },
         "generative-openai":{"model": "gpt-3.5-turbo"},
     },
     "vectorIndexConfig": {
