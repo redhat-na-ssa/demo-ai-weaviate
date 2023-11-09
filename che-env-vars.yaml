@@ -12,5 +12,6 @@ data:
   OPENAI_API_KEY: ''
   WEAVIATE_API_KEY: ''
   WEAVIATE_URL: ''
+  COHERE_API_KEY: ''
 type: Opaque
 
