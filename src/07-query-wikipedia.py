@@ -179,6 +179,8 @@ print_result(bb_res)
 
 generatePrompt = "Write me some interview questions I can ask {title} here is some information about them {text}"
 
+print("********* Generative Search ********")
+
 result = (
   client.query
   .get("Article", ["title","text"])
@@ -186,7 +188,7 @@ result = (
   .with_near_text({
     "concepts": ["famous basketball players"]
   })
-  .with_limit(3)
+  .with_limit(1)
 ).do()
 
 print(json.dumps(result, indent=2))
@@ -207,7 +209,7 @@ result = (
   .with_near_text({
     "concepts": ["famous basketball players"]
   })
-  .with_limit(15)
+  .with_limit(1)
 ).do()
 
 print("Generated Text:\n" + result['data']['Get']['Article'][0]['_additional']['generate']['groupedResult']+"\n"+"\nArticle Titles Provided as Context:\n")
@@ -223,14 +225,14 @@ result = (
   .with_near_text({
     "concepts": ["famous basketball players"]
   })
-  .with_limit(5)
+  .with_limit(1)
 ).do()
 
 print("Generated Text:\n" + result['data']['Get']['Article'][0]['_additional']['generate']['groupedResult']+"\n\nArticle Titles Provided as Context:\n")
 
 k = [print(result['data']['Get']['Article'][i]['title']+"\n") for i in range(len(result['data']['Get']['Article']))]
 
-generateTask = "Tell me a story where these people {title} fight each other, here's some information about them {text}"
+generateTask = "Tell me a one paragraph story where these people {title} fight each other, here's some information about them {text}"
 
 result = (
   client.query
@@ -239,7 +241,7 @@ result = (
   .with_near_text({
     "concepts": ["famous basketball players"]
   })
-  .with_limit(5)
+  .with_limit(1)
 ).do()
 
 print("Generated Text:\n" + result['data']['Get']['Article'][0]['_additional']['generate']['groupedResult']+"\n\nArticle Text Provided as Context:\n")
