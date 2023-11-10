@@ -1,8 +1,6 @@
 # JumpStart your [Vector Database](https://weaviate.io/) to enterprise scale with [Openshift](httos://okd.io)
 
-## Agenda
-
-### What we will build.
+## What we will build.
 ![rag-demo](images/retrieval-augmented-generation.jpg "retrieval augmented generative search")
 
 ### Overview
