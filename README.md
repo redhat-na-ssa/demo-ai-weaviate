@@ -5,6 +5,13 @@
 ### What we will build.
 ![rag-demo](images/retrieval-augmented-generation.jpg "retrieval augmented generative search")
 
+### Overview
+The RAG demonstration is built on the Weaviate quick start example that vectorizes and imports a few Jeopardy-style questions
+using a Hugging Face text-to-vector module. Using Weaviate's Python SDK, similarity searches are performed in vector space which are used to construct a prompt that inferences
+a large language model hosted by OpenAI. The Weaviate database is installed on Openshift as a stateful set providing
+a data parallel enterprise deployment. For the application developer, Openshift DevSpaces offers a full IDE experience
+within a Kubernetes environment. Finally, a simple example application based on Hugging Face's Gradio framework provides a front-end to an end user.
+
 ### What's needed:
 - Access to a free [Openshift Developer Sandbox](https://developers.redhat.com/developer-sandbox).
 - A [HuggingFace API key](https://huggingface.co/settings/tokens).
