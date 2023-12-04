@@ -104,6 +104,7 @@ def print_result(result):
         print(item['text'])
         print()
 
+print("***** Vector Search ******")
 query_result = semantic_search('cutest animals')
 
 print_result(query_result)
