@@ -41,19 +41,12 @@ within a Kubernetes environment. Finally, a simple example application based on 
 3. **Extensions** -> Install the reccomended Python and Openshift extensions.
 4. **View -> Command Pallette** Enter: `run task` -> devfile -> Create the python virtual environment
 5. **Terminal -> New Terminal**
-6. Use the helm client to **install Weaviate** and wait for the 2 weaviate pods to become ready.
+6. Follow [these instructions](install-weaviate.md) to **install Weaviate** and wait for the 2 weaviate pods to become ready. Use `curl` to test the weaviate endpoint health.
+
 ```bash
-helm repo add weaviate https://weaviate.github.io/weaviate-helm
+curl weaviate.weaviate | jq
 ```
-```bash
-helm upgrade --install weaviate weaviate/weaviate --values ./values.yaml
-```
-```bash
-oc get pods -w
-```
-```bash
-curl weaviate | jq
-```
+
 7. Run a few python test clients from the `src` directory. Clients 06 and 07 are WIP.
 ```bash
 python src/00-test-connection.py
