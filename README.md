@@ -79,3 +79,4 @@ helm uninstall weaviate
 - Install an [Openshift](https://www.redhat.com/en/technologies/cloud-computing/openshift) cluster and DevSpaces.
 - As a managed service from any of the major cloud providers.
 
+#### Testing permissions
