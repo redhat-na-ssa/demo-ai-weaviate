@@ -60,7 +60,10 @@ def semantic_search(query: str, limit: int = 3):
 # Gradio interface
 #
 with gr.Blocks() as demo:
-    semantic_examples = [["famous criminals", "Summarize the {text}" ], ["famous bank robberies", "Summarize the {text}"]]
+    semantic_examples = [
+        ["famous criminals", "Summarize the {text}" ],
+        ["famous bank robberies", "Summarize the {text}"]
+    ]
     semantic_input_text = gr.Textbox(label="concept", value=semantic_examples[0][0])
     vdb_button = gr.Button(value="Search the Wikipedia vector DB")
     vdb_button.click(fn=semantic_search, inputs=semantic_input_text, outputs=gr.Textbox(label="Search Results"))
@@ -71,11 +74,12 @@ with gr.Blocks() as demo:
 
     button = gr.Button(value="Perform a Generative Search")
     
-    examples=[["famous bank robberies", "Summarize the chances of convicting a person for the crime explained in the {text} as you might to a panel of jurors in a criminal court.  Limit the answer to two paragraphs."],
-    ["famous criminals", "Based on the {text}, write five questions to interview a panel of jurors in a criminal court. ."],
-    ["extortion", "Explain {title} as lyrics for a rap tune. Limit the answer to a single verse and chorus using emojis."]]
+    examples=[
+        ["famous criminals", "Based on the {text}, write five questions to interview a panel of jurors in a criminal court. ."],
+        ["famous bank robberies", "Summarize the chances of convicting a person for the crime explained in the {text} as you might to a panel of jurors in a criminal court.  Limit the answer to two paragraphs."],
+    ]
 
-    generative_search_input_text = gr.Textbox(label="concept", value="robbery")
+    generative_search_input_text = gr.Textbox(label="concept", value=examples[0][0])
     generative_search_prompt_text = gr.Textbox(label="prompt", value=examples[0][1])
     button.click(fn=generative_search,
     inputs=[generative_search_input_text, generative_search_prompt_text],
