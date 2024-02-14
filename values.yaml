@@ -151,7 +151,7 @@ authentication:
     # Any number of allowed API Keys as plain text
     allowed_keys:
       - readOnly-api-key
-      - TvimqwR0r3oSjlAWmnixVY
+      - admin-api-key
     #   # You can either set a single user for all the listed Allowed API keys OR
     #   # one user per API Key, i.e. length(apikey.allowed_keys) == length(apikey.users) OR
     #   # length(apikey.users) == 1
