@@ -61,7 +61,7 @@ initContainers:
 # Scale replicas of Weaviate. Note that as of v1.8.0 dynamic scaling is limited
 # to cases where no data is imported yet. Scaling down after importing data may
 # break usability. Full dynamic scalability will be added in a future release.
-replicas: 3
+replicas: 2
 resources: {}
   # requests:
   #   cpu: '500m'
@@ -85,7 +85,7 @@ serviceAccountName:
 # storage.fullnameOverride field set, then the default pvc will not be
 # created, instead the one defined in fullnameOverride will be used. Increase the storage size as needed.
 storage:
-  size: 10Gi
+  size: 5Gi
   storageClassName: ""
 
 # The service controls how weaviate is exposed to the outside world. If you
@@ -150,8 +150,8 @@ authentication:
     enabled: true
     # Any number of allowed API Keys as plain text
     allowed_keys:
-      - readOnly-api-key
-      - admin-api-key
+      - readOnly-api-key-change-me
+      - admin-api-key-change-me
     #   # You can either set a single user for all the listed Allowed API keys OR
     #   # one user per API Key, i.e. length(apikey.allowed_keys) == length(apikey.users) OR
     #   # length(apikey.users) == 1

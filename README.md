@@ -1,4 +1,4 @@
-# JumpStart your [Vector Database](https://weaviate.io/) to enterprise scale with [Openshift](httos://okd.io)
+# Building Powerful Applications with [Weaviate](https://weaviate.io/) and [Red Hat OpenShift:](https://developers.redhat.com/developer-sandbox) A Retrieval-Augmented Generation Workflow
 
 ## What we will build.
 ![rag-demo](images/retrieval-augmented-generation.jpg "retrieval augmented generative search")
@@ -21,9 +21,6 @@ within a Kubernetes environment. Finally, a simple example application based on 
 - Access your cluster via the Weaviate Cloud Console with external routes.
 - Security (Doesn't run your containers as root)
 
-### Get Started
-- [Open this repo in the Developer Sandbox](https://workspaces.openshift.com/f?url=https://github.com/redhat-na-ssa/demo-ai-weaviate)
-
 ### Developer Tools: Eclipse-Che/DevSpaces
 - A full IDE experience with a code debugger.
 - Leverage many VSCode extensions.
@@ -33,17 +30,28 @@ within a Kubernetes environment. Finally, a simple example application based on 
 - Environment variables are read in as secrets.
 - DevSpaces is a no-cost add-on to Openshift
 
-### Setup for development: 
-1. **View -> Command Palette** -> Enter: `dev spaces: open openshift console`.
-2. Use the Openshift Web UI to **create a secret with environment variables**.
-   * **Secrets -> Create** and **Save** a new secret (from yaml) using this [example](resources/che-env.yaml).
-   * **Edit ->** Change the values in the secret to match your environment. Your instructor will provide the values.
-3. **Extensions** -> Install the reccomended Python and Openshift extensions.
-4. **View -> Command Pallette** Enter: `run task` -> devfile -> Create the python virtual environment
-5. **Terminal -> New Terminal**
-6. Follow [these instructions](install-weaviate.md) to **install Weaviate**.
+### Getting Started
+- [Open this repo in the Developer Sandbox](https://workspaces.openshift.com/f?url=https://github.com/redhat-na-ssa/demo-ai-weaviate)
+- Login to the [Openshift Developer Sandbox](https://developers.redhat.com/developer-sandbox) and launch Openshift DevSpaces.
+- Create a new workspace by importing the git url `https://workspaces.openshift.com/f?url=https://github.com/redhat-na-ssa/demo-ai-weaviate`
 
-7. Run a few python test clients from the `src` directory. Clients 06 and 07 are WIP.
+
+### Setup DevSpaces for Python Development
+
+1. **VSCode Extensions** -> Confirm the Python IntelliSense extension is installed and enabled.
+1. **View -> Command Palette** -> Enter: `dev spaces: open openshift console`.
+1. Use the Openshift Web UI to **create a secret with environment variables**.
+   * **Secrets -> Create** and **Save** a new secret (from yaml) using this [example](resources/che-env.yaml). You may have to add a `metadata.namespace` field that contains your Developer Sandbox namespace and choose *Create*.
+   * **Edit ->** Scroll down to the data section and change the values in the secret to match your environment variables needed for the API keys and Weaviate URL then save. 
+   *  Now choose *Add Secret to workload*. DevSpaces will likely restart.
+1. Create a new python virtual environment
+      * *Terminal -> New Terminal**
+      * `python -m venv .venv`
+      * `source .venv/bin/activate`
+      * `pip install -r src/requirments.txt`
+1. Follow [these instructions](install-weaviate.md) to **install Weaviate**.
+
+1. Run a few python test clients from the `src` directory. Clients 06 and 07 are WIP.
 ```bash
 python src/00-test-connection.py
 ```
@@ -73,11 +81,14 @@ oc delete all --selector=app=rag
 helm uninstall weaviate
 ```
 
+#### Remove the Openshift storage.
+```bash
+oc delete pvc weaviate-data-weaviate-0 weaviate-data-weaviate-1
+```
+
 ### Additional ways to get access to Openshift.
 - Create a mini-cluster by [installing Code Ready Containers](https://www.okd.io/crc/)
 - Install an [OKD cluster](https://www.okd.io/installation/) and Eclipse-Che.
 - Install an [Openshift](https://www.redhat.com/en/technologies/cloud-computing/openshift) cluster and DevSpaces.
 - As a managed service from any of the major cloud providers.
 
-#### Testing
-v0.1.2

@@ -4,17 +4,18 @@ Running [Weaviate](https://weaviate.io/) on Red Hat Openshift
 
 ## My test enviroment
 - Openshift (v4.13.6)
-- `helm` (v3.8.1)
+- [`helm`](https://helm.sh/docs/intro/install/) (v3.8.1)
 - A workstation to run the `oc` and `helm` [command line tools](https://mirror.openshift.com/pub/openshift-v4/clients/).
 
 ### Installation
-1) Install the `oc` and `helm` programs on your client workstation.
+1) Install the `oc` and [`helm`](https://helm.sh/docs/intro/install/) programs on your client workstation.
 
-2) Login to Openshift and create a project.
+2) Login to Openshift and create a project if needed. If you are using the Developer Sandbox a project will already exist.
+
+To check for the existence of a project run `oc project`, otherwise use `oc new-project` to create one.
 
 ```bash
-PROJ=weaviate
-oc new-project ${PROJ}
+PROJ=`oc project -q`
 ```
 
 3) Begin by reviewing the [Weaviate Kubernetes Installation docs](https://weaviate.io/developers/weaviate/installation/kubernetes). As a quick start, use the [example helm chart values file](values.yaml)  in this repo.
@@ -125,40 +126,6 @@ importing question: 2
 python 02-semantic-search.py
 ```
 
-Sample output:
-```json
-{
-    "data": {
-        "Get": {
-            "Question": [
-                {
-                    "_additional": {
-                        "score": "0.0040983604"
-                    },
-                    "answer": "the atmosphere",
-                    "question": "Changes in the tropospheric layer of this are what gives us weather"
-                },
-                {
-                    "_additional": {
-                        "score": "0.004032258"
-                    },
-                    "answer": "Elephant",
-                    "question": "It's the only living mammal in the order Proboseidea"
-                },
-                {
-                    "_additional": {
-                        "score": "0.003968254"
-                    },
-                    "answer": "the diamondback rattler",
-                    "question": "Heaviest of all poisonous snakes is this North American rattlesnake"
-                }
-            ]
-        }
-    }
-}
-
-```
-
 5) Perform a retrieval augmented generative search.
 
 
@@ -169,26 +136,7 @@ export OPENAI_API_KEY=my_openai_api_key
 ```
 python 03-generative-search.py
 ```
-Sample output:
-```json
-{
-    "data": {
-        "Get": {
-            "Question": [
-                {
-                    "_additional": {
-                        "generate": {
-                            "error": null,
-                            "singleResult": "An elephant is a really big animal with a long trunk, big ears, and a strong body. They are usually gray in color. Elephants are very smart and friendly. They live in places called forests and grasslands. They eat lots of plants and fruits. They use their long trunk to grab food and drink water. Elephants also use their trunk to say hello to other elephants by touching them gently. They have big ears that help them hear really well. Elephants are very strong and can carry heavy things with their trunk. They are also great swimmers and love to play in the water. Elephants are loved by many people because they are so amazing and special!"
-                        }
-                    },
-                    "answer": "Elephant",
-                    "category": "ANIMALS",
-                    "question": "It's the only living mammal in the order Proboseidea"
-                }
-    }
-}
-```
+
 6) Run the Gradio front end application example and visit
 the port reported with a web browser.
 ```bash
@@ -234,35 +182,6 @@ python 05-gradio
 }
 ```
 
-Sample output:
-```json
-{
-  "data": {
-    "Get": {
-      "Question": [
-        {
-          "_additional": {
-            "generate": {
-              "error": null,
-              "singleResult": "🌦️ What causes weather? 🌍✨"
-            }
-          },
-          "question": "Changes in the tropospheric layer of this are what gives us weather"
-        },
-        {
-          "_additional": {
-            "generate": {
-              "error": null,
-              "singleResult": "🌦️ What causes weather changes in the tropospheric layer? #WeatherWonders"
-            }
-          },
-          "question": "Changes in the tropospheric layer of this are what gives us weather"
-        }
-      ]
-    }
-  }
-}
-```
 
 8) Delete the schema if necessary.
 
