@@ -10,9 +10,13 @@ Running [Weaviate](https://weaviate.io/) on Red Hat Openshift
 ### Installation
 1) Install the `oc` and [`helm`](https://helm.sh/docs/intro/install/) programs on your client workstation.
 
-2) Login to Openshift and create a project if needed. If you are using the Developer Sandbox a project will already exist.
+2) Login to Openshift and create a new project with a unique name. If you are using the Developer Sandbox a project will already exist.
 
 To check for the existence of a project run `oc project`, otherwise use `oc new-project` to create one.
+
+```bash
+oc new-project weaviate-bk
+```
 
 ```bash
 PROJ=`oc project -q`
