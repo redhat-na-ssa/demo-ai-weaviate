@@ -11,7 +11,7 @@ a data parallel enterprise deployment. For the application developer, Openshift 
 within a Kubernetes environment. Finally, a simple example application based on Hugging Face's Gradio framework provides a front-end to an end user.
 
 ### What's needed:
-- Access to a free [Openshift Developer Sandbox](https://developers.redhat.com/developer-sandbox).
+- Access to a free [Developer Sandbox for Red Hat Openshift](https://developers.redhat.com/developer-sandbox).
 - A [HuggingFace API key](https://huggingface.co/settings/tokens).
 - An [OpenAI API key](https://platform.openai.com/account/api-keys).
 
@@ -31,8 +31,8 @@ within a Kubernetes environment. Finally, a simple example application based on 
 - DevSpaces is a no-cost add-on to Openshift
 
 ### Getting Started
-- [Open this repo in the Developer Sandbox](https://workspaces.openshift.com/f?url=https://github.com/redhat-na-ssa/demo-ai-weaviate)
-- Login to the [Openshift Developer Sandbox](https://developers.redhat.com/developer-sandbox) and launch Openshift DevSpaces.
+- [Open this repo in the Developer Sandbox for Red Hat Openshift](https://w rkspaces.openshift.com/f?url=https://github.com/redhat-na-ssa/demo-ai-weaviate)
+- Login to the [Developer Sandbox for Red Hat Openshift](https://developers.redhat.com/developer-sandbox) and launch Openshift DevSpaces.
 - Create a new workspace by importing the git url `https://workspaces.openshift.com/f?url=https://github.com/redhat-na-ssa/demo-ai-weaviate`
 
 
