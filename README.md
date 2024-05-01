@@ -31,7 +31,6 @@ within a Kubernetes environment. Finally, a simple example application based on 
 - DevSpaces is a no-cost add-on to Openshift
 
 ### Getting Started
-- [Open this repo in the Developer Sandbox for Red Hat Openshift](https://w rkspaces.openshift.com/f?url=https://github.com/redhat-na-ssa/demo-ai-weaviate)
 - Login to the [Developer Sandbox for Red Hat Openshift](https://developers.redhat.com/developer-sandbox) and launch Openshift DevSpaces.
 - Create a new workspace by importing the git url `https://workspaces.openshift.com/f?url=https://github.com/redhat-na-ssa/demo-ai-weaviate`
 
