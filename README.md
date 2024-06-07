@@ -50,7 +50,8 @@ within a Kubernetes environment. Finally, a simple example application based on 
       * `pip install -r src/requirments.txt`
 1. Follow [these instructions](install-weaviate.md) to **install Weaviate**.
 
-1. Run a few python test clients from the `src` directory. Clients 06 and 07 are WIP.
+1. Run a few python test clients from the `src` directory. Clients 06 and 07 are WIP and 
+require the [wikipedia parquet data file](https://koz-data.s3.us-east-2.amazonaws.com/wiki_simple_100k.parquet).
 ```bash
 python src/00-test-connection.py
 ```
