@@ -32,7 +32,7 @@ within a Kubernetes environment. Finally, a simple example application based on 
 
 ### Getting Started
 - Login to the [Developer Sandbox for Red Hat Openshift](https://developers.redhat.com/developer-sandbox) and launch Openshift DevSpaces.
-- Create a new workspace by importing the git url `https://workspaces.openshift.com/f?url=https://github.com/redhat-na-ssa/demo-ai-weaviate`
+- Create a new workspace by importing the git url `https://github.com/redhat-na-ssa/demo-ai-weaviate`
 
 
 ### Setup DevSpaces for Python Development
