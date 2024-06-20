@@ -667,7 +667,7 @@ modules:
   text2vec-openai:
 
     # enable if you want to use OpenAI module
-    enabled: false
+    enabled: true
 
     # Set your OpenAI API Key to be passed to Weaviate pod as
     # an environment variable. You can set either the OpenAI's Service API key

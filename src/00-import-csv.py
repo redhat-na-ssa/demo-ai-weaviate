@@ -105,7 +105,7 @@ if __name__ == '__main__':
         download_data()
 
         weaviate_url = os.getenv("WEAVIATE_URL")        # Recommended: save to an environment variable
-        weaviate_url = "weaviate"
+        # weaviate_url = "weaviate"
         weaviate_key = os.getenv("WEAVIATE_API_KEY")    # Recommended: save to an environment variable
 
         logging.basicConfig(level=logging.INFO)
@@ -114,7 +114,7 @@ if __name__ == '__main__':
             auth_credentials=AuthApiKey(weaviate_key),
             http_port=80,
             http_secure=False,
-            grpc_host="weaviate-grpc",
+            grpc_host="weaviate-grpc.weaviate",
             grpc_port=50051,
             grpc_secure=False,
             skip_init_checks=False,
