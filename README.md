@@ -1,4 +1,4 @@
-# Summarizing Financial Data with RAG using [Weaviate](https://weaviate.io/) and [Red Hat OpenShift:](https://developers.redhat.com/developer-sandbox) A Retrieval-Augmented Generation Workflow
+# Summarizing Financial Data with a RAG workflow using [Weaviate](https://weaviate.io/) and [Red Hat OpenShift:](https://developers.redhat.com/developer-sandbox)
 
 ## What we will build.
 ![rag-demo](images/retrieval-augmented-generation.jpg "retrieval augmented generative search")
