@@ -1,11 +1,12 @@
 import weaviate
 import weaviate.classes as wvc
+from weaviate.auth import AuthApiKey
 import os
 import requests
 import json
 import ijson
 import wget
-
+import logging
 
 def download_data():
     print("Downloading symbols...") 
@@ -18,8 +19,10 @@ def ingest_data(client):
     # ===== Define the collection =====
     symbols = client.collections.create(
         name="Symbols",
-        vectorizer_config=wvc.config.Configure.Vectorizer.text2vec_openai(),  # If set to "none" you must always provide vectors yourself. Could be any other "text2vec-*" also.
-        generative_config=wvc.config.Configure.Generative.openai()  # Ensure the `generative-openai` module is used for generative queries
+        # The OpenAI vectorizer seems quicker.
+        # vectorizer_config=wvc.config.Configure.Vectorizer.text2vec_openai (),  # If set to "none" you must always provide vectors yourself. Could be any other "text2vec-*" also.
+        vectorizer_config=wvc.config.Configure.Vectorizer.text2vec_huggingface(),  # If set to "none" you must always provide vectors yourself. Could be any other "text2vec-*" also.
+        generative_config=wvc.config.Configure.Generative.openai(),  # Ensure the `generative-openai` module is used for generative queries
     )
 
     # Settings for displaying the import progress
@@ -99,10 +102,25 @@ def ingest_data(client):
     print(f"Finished importing {counter} symbols.")
 
 if __name__ == '__main__':
+    logging.basicConfig(level=logging.INFO)
     try:
         download_data()
-        client = client = weaviate.connect_to_embedded(
-            headers={"X-OpenAI-Api-key": os.getenv("OPENAI_API_KEY")}
+
+        weaviate_host = os.getenv("WEAVIATE_HOST")
+        weaviate_key = os.getenv("WEAVIATE_API_KEY")
+
+        logging.basicConfig(level=logging.INFO)
+        client = weaviate.connect_to_custom(
+            http_host=weaviate_host,
+            auth_credentials=AuthApiKey(weaviate_key),
+            http_port=80,
+            http_secure=False,
+            grpc_host="weaviate-grpc.weaviate",
+            grpc_port=50051,
+            grpc_secure=False,
+            skip_init_checks=False,
+            headers={"X-OpenAI-Api-key": os.getenv("OPENAI_API_KEY"),
+                "X-Huggingface-Api-key": os.getenv("HUGGINGFACE_API_KEY")}
         )
 
         client.collections.delete("Symbols")
@@ -111,7 +129,15 @@ if __name__ == '__main__':
         ingest_data(client)
 
         symbols = client.collections.get("Symbols")
+        print(f'symbols: {symbols}')
 
+        if client.is_ready():
+            logging.info('')
+            logging.info(f'Found {len(client.cluster.nodes())} Weaviate nodes.')
+            logging.info('')
+            for node in client.cluster.nodes():
+                logging.info(node)
+                logging.info('')
     finally:
         client.close()  # Close client gracefully
 

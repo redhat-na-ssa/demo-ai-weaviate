@@ -1,2 +1,2 @@
 APP_HOME=/opt/app-root/src
-APP_FILE=05-gradio.py
+APP_FILE=03-app.py

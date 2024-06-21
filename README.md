@@ -1,19 +1,21 @@
-# Building Powerful Applications with [Weaviate](https://weaviate.io/) and [Red Hat OpenShift:](https://developers.redhat.com/developer-sandbox) A Retrieval-Augmented Generation Workflow
+# Summarizing Financial Data with a RAG workflow using [Weaviate](https://weaviate.io/) and [Red Hat OpenShift:](https://developers.redhat.com/developer-sandbox)
 
 ## What we will build.
 ![rag-demo](images/retrieval-augmented-generation.jpg "retrieval augmented generative search")
 
 ### Overview
-The RAG demonstration is built on the Weaviate quick start example that vectorizes and imports a few Jeopardy-style questions
+The RAG demonstration is built on the Weaviate quick start example that vectorizes and imports financial data from [AlphaVantage](https://www.alphavantage.co)
 using a Hugging Face text-to-vector module. Using Weaviate's Python SDK, similarity searches are performed in vector space which are used to construct a prompt that inferences
 a large language model hosted by OpenAI. The Weaviate database is installed on Openshift as a stateful set providing
 a data parallel enterprise deployment. For the application developer, Openshift DevSpaces offers a full IDE experience
 within a Kubernetes environment. Finally, a simple example application based on Hugging Face's Gradio framework provides a front-end to an end user.
 
+![financial-rag](images/finance-rag.png "Financial summary using RAG")
+
 ### What's needed:
-- Access to a free [Developer Sandbox for Red Hat Openshift](https://developers.redhat.com/developer-sandbox).
-- A [HuggingFace API key](https://huggingface.co/settings/tokens).
-- An [OpenAI API key](https://platform.openai.com/account/api-keys).
+- Access to [Red Hat Openshift](https://developers.redhat.com/developer-sandbox).
+- A [HuggingFace API key](https://huggingface.co/settings/tokens) for embeddings.
+- An [OpenAI API key](https://platform.openai.com/account/api-keys) for generative searches.
 
 ### Why run Weaviate On Openshift?
 - Support for [Distributed Architectures](https://weaviate.io/developers/weaviate/concepts/replication-architecture).
@@ -31,12 +33,11 @@ within a Kubernetes environment. Finally, a simple example application based on 
 - DevSpaces is a no-cost add-on to Openshift
 
 ### Getting Started
-- Login to the [Developer Sandbox for Red Hat Openshift](https://developers.redhat.com/developer-sandbox) and launch Openshift DevSpaces.
+- Login to [Openshift](https://developers.redhat.com/developer-sandbox) and launch Openshift DevSpaces.
 - Create a new workspace by importing the git url `https://github.com/redhat-na-ssa/demo-ai-weaviate`
 
 
 ### Setup DevSpaces for Python Development
-
 1. **VSCode Extensions** -> Confirm the Python IntelliSense extension is installed and enabled.
 1. **View -> Command Palette** -> Enter: `dev spaces: open openshift console`.
 1. Use the Openshift Web UI to **create a secret with environment variables**.
@@ -49,28 +50,29 @@ within a Kubernetes environment. Finally, a simple example application based on 
       * `source .venv/bin/activate`
       * `pip install -r src/requirments.txt`
 1. Follow [these instructions](install-weaviate.md) to **install Weaviate**.
-
-1. Run a few python test clients from the `src` directory. Clients 06 and 07 are WIP and 
-require the [wikipedia parquet data file](https://koz-data.s3.us-east-2.amazonaws.com/wiki_simple_100k.parquet).
+1. Verify the connection to the Weaviate service.
 ```bash
 python src/00-test-connection.py
 ```
+2. Import the data.
 ```bash
-python src/05-gradio.py
+python src/01-import.py
 ```
-
+3. Validate the Weaviate collection.
+```bash
+python src/02-check-collection.py
+```
+4. Run the application. DevSpaces should setup port forwarding so the application will appear in a web browser.
+```bash
+python src/03-app.py
+```
 ### Move the app into production.
 1. From the terminal, create an Openshift application.
 ```bash
-oc new-app python~https://github.com/bkoz/weaviate --context-dir=/src --name=rag
+oc new-app python~https://github.com/redhat-na-ssa/demo-ai-weaviate#v4 --context-dir=/src --name=rag \
+--env WEAVIATE_HOST=weaviate.weaviate --env WEAVIATE_API_KEY=your_weaviate_admin-api-key --env OPENAI_API_KEY=your_openai_api_key
 ```
-
-2. Add the secret to the deployment.
-```bash
-oc set env --from=secret/che-env-vars deployment/rag
-```
-
-3. Expose the app with a route.
+2. Expose the app with a route.
 ```bash
 oc create route edge --service rag --insecure-policy='Redirect'
 ```
