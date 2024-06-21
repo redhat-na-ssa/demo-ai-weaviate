@@ -65,7 +65,8 @@ python src/03-app.py
 ### Move the app into production.
 1. From the terminal, create an Openshift application.
 ```bash
-oc new-app python~https://github.com/redhat-na-ssa/demo-ai-weaviate --context-dir=/src --name=rag
+oc new-app python~https://github.com/redhat-na-ssa/demo-ai-weaviate#v4 --context-dir=/src --name=rag 
+--env WEAVIATE_URL=weaviate.weaviate --env WEAVIATE_API_KEY=your_weaviate_admin-api-key --env OPENAI_API_KEY=your_openai_api_key
 ```
 2. Add the secret to the deployment.
 ```bash
