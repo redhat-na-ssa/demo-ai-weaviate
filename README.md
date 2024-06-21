@@ -10,6 +10,8 @@ a large language model hosted by OpenAI. The Weaviate database is installed on O
 a data parallel enterprise deployment. For the application developer, Openshift DevSpaces offers a full IDE experience
 within a Kubernetes environment. Finally, a simple example application based on Hugging Face's Gradio framework provides a front-end to an end user.
 
+![financial-rag](images/finance-rag.png "Financial summary using RAG")
+
 ### What's needed:
 - Access to a free [Developer Sandbox for Red Hat Openshift](https://developers.redhat.com/developer-sandbox).
 - A [HuggingFace API key](https://huggingface.co/settings/tokens).
