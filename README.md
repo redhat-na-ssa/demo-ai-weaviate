@@ -4,7 +4,7 @@
 ![rag-demo](images/retrieval-augmented-generation.jpg "retrieval augmented generative search")
 
 ### Overview
-The RAG demonstration is built on the Weaviate quick start example that vectorizes and imports a few Jeopardy-style questions
+The RAG demonstration is built on the Weaviate quick start example that vectorizes and imports financial data from [AlphaVantage](https://www.alphavantage.co)
 using a Hugging Face text-to-vector module. Using Weaviate's Python SDK, similarity searches are performed in vector space which are used to construct a prompt that inferences
 a large language model hosted by OpenAI. The Weaviate database is installed on Openshift as a stateful set providing
 a data parallel enterprise deployment. For the application developer, Openshift DevSpaces offers a full IDE experience
