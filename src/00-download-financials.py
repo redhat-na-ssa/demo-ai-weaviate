@@ -68,39 +68,18 @@ def retrieve_data_to_csv(function: str, symbol: str, api_key: str) -> dict:
     # parse output
     parsed = json.loads(data)
 
-    # Convert and write JSON object to file
-    # with open("data/symbols/" + symbol + ".json", "w") as outfile: 
-    #     json.dump(parsed, outfile)
-    #     print(f'Saved {outfile}')
-
     print(f'Retrieved {symbol}, response = {response.status_code} ')
     return parsed
 
 #
-# This should be a function
+# Convert and return the python dict object.
 #
-# Convert and write the python dict object to file.
-#
-# Input:
-#   dictionary: dict
-#   filename: str
-#
-# Output:
-#   bool (True if successful, False otherwise)
-#
-# Example:
-#   dict_to_json_file(dictionary=company_overview, filename='IBM.json') -> True or False 
-#
+
 def dict_to_json_file(dictionary: dict, filename: str) -> bool:
     with open(filename, "w") as outfile: 
         json.dump(list_of_symbols, outfile)
         print(f'Saved {outfile}')
     return True
-
-# company_overview = retrieve_data('OVERVIEW', 'IBM', 'None')
-
-# tickers = ['IBM', 'MSFT', 'AMZN', 'GOOG', 'AAPL', 'NFLX', 'NVDA', 'TSLA', 'PYPL', 'BABA', 'ADBE', 'AMD', 'INTC', 'CSCO', 
-#            'NKE', 'JNJ', 'PEP', 'WMT', 'COST', 'KO', 'JPM', 'DIS']
 
 #
 # Retreive a list of symbols from the CSV file
@@ -110,8 +89,7 @@ df = pd.read_csv('data/tickers.csv')
 
 #
 # Retreive an overview for each symbol and save the data to a JSON file in the data directory.
-# 
-# list_of_symbols = []
+# A total hack.
 
 filename="data/output.json"
 os.remove(filename)
@@ -128,11 +106,3 @@ with open(filename, "a") as outfile:
     outfile.close()
     print(f'Saved {outfile}')
 
-
-
-# print(list_of_symbols)
-
-#
-# Save all of the data to a single JSON file in the data directory.
-# 
-# dict_to_json_file('list_of_symbols', 'data/output.json')
