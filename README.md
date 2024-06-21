@@ -54,25 +54,21 @@ within a Kubernetes environment. Finally, a simple example application based on 
 ```bash
 python src/00-test-connection.py
 ```
-1. Import the data.
+2. Import the data.
 ```bash
 python src/01-import.py
 ```
-1. Run the application. DevSpaces should setup port forwarding so the application will appear in a web browser.
+3. Run the application. DevSpaces should setup port forwarding so the application will appear in a web browser.
 ```bash
 python src/03-app.py
 ```
 ### Move the app into production.
 1. From the terminal, create an Openshift application.
 ```bash
-oc new-app python~https://github.com/redhat-na-ssa/demo-ai-weaviate#v4 --context-dir=/src --name=rag 
+oc new-app python~https://github.com/redhat-na-ssa/demo-ai-weaviate#v4 --context-dir=/src --name=rag \
 --env WEAVIATE_URL=weaviate.weaviate --env WEAVIATE_API_KEY=your_weaviate_admin-api-key --env OPENAI_API_KEY=your_openai_api_key
 ```
-2. Add the secret to the deployment.
-```bash
-oc set env --from=secret/che-env-vars deployment/rag
-```
-3. Expose the app with a route.
+2. Expose the app with a route.
 ```bash
 oc create route edge --service rag --insecure-policy='Redirect'
 ```
