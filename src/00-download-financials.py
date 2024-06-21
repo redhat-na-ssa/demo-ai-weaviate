@@ -1,3 +1,20 @@
+#
+# This script will download financial overviews from AlphaVantage.
+# It is expected to take 3-4 hours since I'm using the most
+# cost effective subscription plan (75 api calls/minute). A
+# download.json file will get created and populated with overview
+# data including some nulls {}, and Errors. The nulls and errors
+# be removed and at this time I'm using a manual process shown below.
+#
+# Remove the lines that begin with {},
+#
+# sed '/^{},$/d' output.json > tmp1.json
+#
+# Remove the lines that contain Error
+# sed '/Error/d' tmp1.json > tmp2.json
+# mv tmp2.json symbols.json
+#
+
 import requests
 import pandas as pd
 import json
