@@ -38,7 +38,6 @@ within a Kubernetes environment. Finally, a simple example application based on 
 
 
 ### Setup DevSpaces for Python Development
-
 1. **VSCode Extensions** -> Confirm the Python IntelliSense extension is installed and enabled.
 1. **View -> Command Palette** -> Enter: `dev spaces: open openshift console`.
 1. Use the Openshift Web UI to **create a secret with environment variables**.
@@ -51,27 +50,27 @@ within a Kubernetes environment. Finally, a simple example application based on 
       * `source .venv/bin/activate`
       * `pip install -r src/requirments.txt`
 1. Follow [these instructions](install-weaviate.md) to **install Weaviate**.
-
-1. Run a few python test clients from the `src` directory. Clients 06 and 07 are WIP and 
-require the [wikipedia parquet data file](https://koz-data.s3.us-east-2.amazonaws.com/wiki_simple_100k.parquet).
+1. Verify the connection to the Weaviate service.
 ```bash
 python src/00-test-connection.py
 ```
+1. Import the data.
 ```bash
-python src/05-gradio.py
+python src/01-import.py
 ```
-
+1. Run the application. DevSpaces should setup port forwarding so the application will appear in a web browser.
+```bash
+python src/03-app.py
+```
 ### Move the app into production.
 1. From the terminal, create an Openshift application.
 ```bash
-oc new-app python~https://github.com/bkoz/weaviate --context-dir=/src --name=rag
+oc new-app python~https://github.com/redhat-na-ssa/demo-ai-weaviate --context-dir=/src --name=rag
 ```
-
 2. Add the secret to the deployment.
 ```bash
 oc set env --from=secret/che-env-vars deployment/rag
 ```
-
 3. Expose the app with a route.
 ```bash
 oc create route edge --service rag --insecure-policy='Redirect'
