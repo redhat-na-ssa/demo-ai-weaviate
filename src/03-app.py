@@ -120,12 +120,12 @@ def generative_search(query='computers', task=None, limit=2) -> str:
 
  
 if __name__ == '__main__':
-    weaviate_url = os.getenv("WEAVIATE_URL")       
+    weaviate_host = os.getenv("WEAVIATE_HOST")       
     weaviate_key = os.getenv("WEAVIATE_API_KEY")
 
     try:
         client = weaviate.connect_to_custom(
-                    http_host=weaviate_url,
+                    http_host=weaviate_host,
                     auth_credentials=AuthApiKey(weaviate_key),
                     http_port=80,
                     http_secure=False,
@@ -133,7 +133,8 @@ if __name__ == '__main__':
                     grpc_port=50051,
                     grpc_secure=False,
                     skip_init_checks=False,
-                    headers={"X-OpenAI-Api-key": os.getenv("OPENAI_API_KEY")}
+                    headers={"X-OpenAI-Api-key": os.getenv("OPENAI_API_KEY"),
+                        "X-Huggingface-Api-key": os.getenv("HUGGINGFACE_API_KEY")}
                 )
 
         symbols = client.collections.get("Symbols")

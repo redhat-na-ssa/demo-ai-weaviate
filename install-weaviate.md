@@ -16,11 +16,11 @@ for Red Hat Openshift a project will already exist.
 To check for the existence of a project run `oc project`, otherwise use `oc new-project` to create one.
 
 ```bash
-oc new-project weaviate-bk
+PROJ=`weaviate`
 ```
 
 ```bash
-PROJ=`oc project -q`
+oc new-project $PROJ
 ```
 
 3) Begin by reviewing the [Weaviate Kubernetes Installation docs](https://weaviate.io/developers/weaviate/installation/kubernetes). As a quick start, use the [example helm chart values file](values.yaml)  in this repo.
@@ -30,6 +30,7 @@ PROJ=`oc project -q`
     - This example `values.yaml` enables the following sections:
         - `apikey`
         - `text2vec-huggingface`
+        - `text2vec-openai`
         - `generative-openai`
 
 4) Configure and run the helm installer and wait for the weaviate pod to become ready.
@@ -44,15 +45,22 @@ helm repo add weaviate https://weaviate.github.io/weaviate-helm
 helm upgrade --install weaviate weaviate/weaviate --namespace ${PROJ} --values ./values.yaml
 ```
 
-5) Expose the Weaviate service as a route
+5) Optionally, expose the Weaviate service as a route. If using DevSpaces you can use 
+the weaviate service (http://weaviate.weaviate) directly.
 ```bash
-oc create route edge weaviate --service=weaviate --insecure-policy='Redirect'
+oc create route edge weaviate --service=weaviate --insecure-policy='Redirect' -n $PROJ
 ```
 
-## Testing
+### Test using the route.
 ```bash
-export WEAVIATE_URL=https://$(oc get routes weaviate -n ${PROJ} -o jsonpath='{.spec.host}')
-curl ${WEAVIATE_URL}
+export WEAVIATE_HOST=$(oc get routes weaviate -n ${PROJ} -o jsonpath='{.spec.host}')
+curl https://"${WEAVIATE_HOST}" | jq .
+```
+
+### Test using the service name. 
+```bash
+export WEAVIATE_HOST="https://" + $(oc get routes weaviate -n ${PROJ} -o jsonpath='{.spec.host}')
+curl http://weaviate.weaviate | jq | jq .
 ```
 
 Sample output
@@ -67,7 +75,7 @@ Sample output
 ```
 ## Sample Applications
 
-1) Create a python virtual environment and try a few of the [example clients](src). The first two python examples expect the `WEAVIATE_URL` and `WEAVIATE_API_KEY` variables to be set.
+1) Create a python virtual environment and try a few of the [example clients](src). The first two python examples expect the `WEAVIATE_HOST` and `WEAVIATE_API_KEY` variables to be set.
 ```bash
 python -m venv ~/venv
 source ~/venv/bin/activate
@@ -75,7 +83,7 @@ cd src
 pip install -r requirements.txt
 ```
 ```bash
-export WEAVIATE_URL=https://$(oc get routes weaviate -n ${PROJ} -o jsonpath='{.spec.host}')
+export WEAVIATE_HOST=https://$(oc get routes weaviate -n ${PROJ} -o jsonpath='{.spec.host}')
 ```
 ```bash
 export WEAVIATE_API_KEY='weaviate-api-key-from-values-file-above'
@@ -114,9 +122,9 @@ The first time running may produce the following error if the huggingface transf
 
 Sample output:
 ```
-WEAVIATE_URL: https://weaviate-weaviate.apps.ocp.sandbox1234.openshift.com
+WEAVIATE_HOST: https://weaviate-weaviate.apps.ocp.sandbox1234.openshift.com
 
-WEAVIATE_URL: https://weaviate-weaviate.apps.ocp.sandbox1234.openshift.com is_ready() = True
+WEAVIATE_HOST: https://weaviate-weaviate.apps.ocp.sandbox1234.openshift.com is_ready() = True
 
 Creating a class using the text2vec-huggingface vectorizer.
 Question class already exists, skipping

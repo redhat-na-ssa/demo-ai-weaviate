@@ -25,13 +25,13 @@ if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO)
     try:
 
-        weaviate_url = os.getenv("WEAVIATE_URL")        # Recommended: save to an environment variable
-        # weaviate_url = "weaviate"
+        weaviate_host = os.getenv("WEAVIATE_HOST")        # Recommended: save to an environment variable
+        # weaviate_host = "weaviate"
         weaviate_key = os.getenv("WEAVIATE_API_KEY")    # Recommended: save to an environment variable
 
         logging.basicConfig(level=logging.INFO)
         client = weaviate.connect_to_custom(
-            http_host=weaviate_url,
+            http_host=weaviate_host,
             auth_credentials=AuthApiKey(weaviate_key),
             http_port=80,
             http_secure=False,

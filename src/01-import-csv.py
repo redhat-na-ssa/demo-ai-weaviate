@@ -19,8 +19,10 @@ def ingest_data(client):
     # ===== Define the collection =====
     symbols = client.collections.create(
         name="Symbols",
-        vectorizer_config=wvc.config.Configure.Vectorizer.text2vec_openai(),  # If set to "none" you must always provide vectors yourself. Could be any other "text2vec-*" also.
-        generative_config=wvc.config.Configure.Generative.openai()  # Ensure the `generative-openai` module is used for generative queries
+        # The OpenAI vectorizer seems quicker.
+        # vectorizer_config=wvc.config.Configure.Vectorizer.text2vec_openai (),  # If set to "none" you must always provide vectors yourself. Could be any other "text2vec-*" also.
+        vectorizer_config=wvc.config.Configure.Vectorizer.text2vec_huggingface(),  # If set to "none" you must always provide vectors yourself. Could be any other "text2vec-*" also.
+        generative_config=wvc.config.Configure.Generative.openai(),  # Ensure the `generative-openai` module is used for generative queries
     )
 
     # Settings for displaying the import progress
@@ -104,13 +106,12 @@ if __name__ == '__main__':
     try:
         download_data()
 
-        weaviate_url = os.getenv("WEAVIATE_URL")        # Recommended: save to an environment variable
-        # weaviate_url = "weaviate"
-        weaviate_key = os.getenv("WEAVIATE_API_KEY")    # Recommended: save to an environment variable
+        weaviate_host = os.getenv("WEAVIATE_HOST")
+        weaviate_key = os.getenv("WEAVIATE_API_KEY")
 
         logging.basicConfig(level=logging.INFO)
         client = weaviate.connect_to_custom(
-            http_host=weaviate_url,
+            http_host=weaviate_host,
             auth_credentials=AuthApiKey(weaviate_key),
             http_port=80,
             http_secure=False,
@@ -118,7 +119,8 @@ if __name__ == '__main__':
             grpc_port=50051,
             grpc_secure=False,
             skip_init_checks=False,
-            headers={"X-OpenAI-Api-key": os.getenv("OPENAI_API_KEY")}
+            headers={"X-OpenAI-Api-key": os.getenv("OPENAI_API_KEY"),
+                "X-Huggingface-Api-key": os.getenv("HUGGINGFACE_API_KEY")}
         )
 
         client.collections.delete("Symbols")

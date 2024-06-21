@@ -13,9 +13,9 @@ within a Kubernetes environment. Finally, a simple example application based on 
 ![financial-rag](images/finance-rag.png "Financial summary using RAG")
 
 ### What's needed:
-- Access to a free [Developer Sandbox for Red Hat Openshift](https://developers.redhat.com/developer-sandbox).
-- A [HuggingFace API key](https://huggingface.co/settings/tokens).
-- An [OpenAI API key](https://platform.openai.com/account/api-keys).
+- Access to [Red Hat Openshift](https://developers.redhat.com/developer-sandbox).
+- A [HuggingFace API key](https://huggingface.co/settings/tokens) for embeddings.
+- An [OpenAI API key](https://platform.openai.com/account/api-keys) for generative searches.
 
 ### Why run Weaviate On Openshift?
 - Support for [Distributed Architectures](https://weaviate.io/developers/weaviate/concepts/replication-architecture).
@@ -33,7 +33,7 @@ within a Kubernetes environment. Finally, a simple example application based on 
 - DevSpaces is a no-cost add-on to Openshift
 
 ### Getting Started
-- Login to the [Developer Sandbox for Red Hat Openshift](https://developers.redhat.com/developer-sandbox) and launch Openshift DevSpaces.
+- Login to [Openshift](https://developers.redhat.com/developer-sandbox) and launch Openshift DevSpaces.
 - Create a new workspace by importing the git url `https://github.com/redhat-na-ssa/demo-ai-weaviate`
 
 
@@ -58,7 +58,11 @@ python src/00-test-connection.py
 ```bash
 python src/01-import.py
 ```
-3. Run the application. DevSpaces should setup port forwarding so the application will appear in a web browser.
+3. Validate the Weaviate collection.
+```bash
+python src/02-check-collection.py
+```
+4. Run the application. DevSpaces should setup port forwarding so the application will appear in a web browser.
 ```bash
 python src/03-app.py
 ```
@@ -66,7 +70,7 @@ python src/03-app.py
 1. From the terminal, create an Openshift application.
 ```bash
 oc new-app python~https://github.com/redhat-na-ssa/demo-ai-weaviate#v4 --context-dir=/src --name=rag \
---env WEAVIATE_URL=weaviate.weaviate --env WEAVIATE_API_KEY=your_weaviate_admin-api-key --env OPENAI_API_KEY=your_openai_api_key
+--env WEAVIATE_HOST=weaviate.weaviate --env WEAVIATE_API_KEY=your_weaviate_admin-api-key --env OPENAI_API_KEY=your_openai_api_key
 ```
 2. Expose the app with a route.
 ```bash
