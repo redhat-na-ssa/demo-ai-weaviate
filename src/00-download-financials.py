@@ -4,7 +4,7 @@
 # cost effective subscription plan (75 api calls/minute). A
 # download.json file will get created and populated with overview
 # data including some nulls {}, and Errors. The nulls and errors
-# imust be removed and at this time I'm using a manual process shown below.
+# must be removed and at this time I'm using a manual process shown below.
 #
 # Remove the lines that begin with {},
 #
