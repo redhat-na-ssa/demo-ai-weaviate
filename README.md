@@ -43,7 +43,7 @@ within a Kubernetes environment. Finally, a simple example application based on 
 1. **VSCode Extensions** -> Confirm the Python IntelliSense extension is installed and enabled.
 1. **View -> Command Palette** -> Enter: `dev spaces: open openshift console`.
 1. Use the Openshift Web UI to **create a secret with environment variables**.
-   * **Secrets -> Create** and **Save** a new secret (from yaml) using this [example](resources/che-env.yaml). You may have to add a `metadata.namespace` field that contains your Developer Sandbox namespace and choose *Create*.
+   * **Secrets -> Create** and **Save** a new secret (from yaml) using this [example](che-env-vars.yaml). You may have to add a `metadata.namespace` field that contains your Developer Sandbox namespace and choose *Create*.
    * **Edit ->** Scroll down to the data section and change the values in the secret to match your environment variables needed for the API keys and Weaviate URL then save. 
    *  Now choose *Add Secret to workload*. DevSpaces will likely restart.
 1. Create a new python virtual environment
