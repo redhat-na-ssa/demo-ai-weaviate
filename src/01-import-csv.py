@@ -21,7 +21,7 @@ def ingest_data(client):
         name="Symbols",
         # The OpenAI vectorizer seems quicker.
         # vectorizer_config=wvc.config.Configure.Vectorizer.text2vec_openai (),  # If set to "none" you must always provide vectors yourself. Could be any other "text2vec-*" also.
-        vectorizer_config=wvc.config.Configure.Vectorizer.text2vec_huggingface(),  # If set to "none" you must always provide vectors yourself. Could be any other "text2vec-*" also.
+        vectorizer_config=wvc.config.Configure.Vectorizer.text2vec_huggingface(wait_for_model=True),  # If set to "none" you must always provide vectors yourself. Could be any other "text2vec-*" also.
         generative_config=wvc.config.Configure.Generative.openai(),  # Ensure the `generative-openai` module is used for generative queries
     )
 

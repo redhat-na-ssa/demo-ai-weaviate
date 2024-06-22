@@ -12,8 +12,9 @@ def ingest_data(client):
     # ===== Define the collection =====
     symbols = client.collections.create(
         name="Symbols",
-        vectorizer_config=wvc.config.Configure.Vectorizer.text2vec_openai(),  # If set to "none" you must always provide vectors yourself. Could be any other "text2vec-*" also.
-        generative_config=wvc.config.Configure.Generative.openai()  # Ensure the `generative-openai` module is used for generative queries
+        vectorizer_config=wvc.config.Configure.Vectorizer.text2vec_huggingface(wait_for_model=True),
+        # vectorizer_config=wvc.config.Configure.Vectorizer.text2vec_openai(),
+        generative_config=wvc.config.Configure.Generative.openai()  
     )
 
     # Settings for displaying the import progress
