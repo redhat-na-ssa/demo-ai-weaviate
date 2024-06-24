@@ -17,12 +17,14 @@ within a Kubernetes environment. Finally, a simple example application based on 
 
 To build the vector database, a number of company overview's are downloaded using 
 [AlphaVantage's API](https://www.alphavantage.co/query?function=OVERVIEW&symbol=IBM&apikey=demo)
-and imported into Weaviate. Each overview consists of a short description along
-with sampling of financial metrics such as market capitalization, book value and earnings per share
-just to name a few. A user can then query the database using natural language concepts and Weaviate 
-will return companies that have similar descriptions. Finally, a generative search is performed
-using a [GPT-3](https://openai.com/blog/openai-api/) large language model (LLM) to generate a 
-financial summary which is presented to the user.  
+and imported into Weaviate. This represents a private knowledgebase. Each overview 
+consists of a short description along with sampling of financial metrics such as market
+capitalization, book value and earnings per share just to name a few. A user can then query 
+the database using natural language concepts and Weaviate will return companies that are most 
+similar to the concept. Finally, a generative search is performed using a 
+[GPT-3](https://openai.com/blog/openai-api/) large language model (LLM) to generate a 
+financial summary which is presented to the user. It is important to note that the summary is 
+based on the financial data from the original company overview database and not the GPT-3 model.  
 
 ### What's needed:
 - Access to [Red Hat Openshift](https://developers.redhat.com/developer-sandbox).
