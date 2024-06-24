@@ -9,9 +9,13 @@ import wget
 import logging
 
 def download_data():
-    print("Downloading symbols...") 
-    url = "https://koz-data.s3.us-east-2.amazonaws.com/symbols.json"
-    wget.download(url, "data/symbols.json")
+    try:
+      os.stat("data/symbols.json")
+      logging.info("Symbols already downloaded")
+    except:
+      logging.info("Downloading symbols...")
+      url = "https://koz-data.s3.us-east-2.amazonaws.com/symbols.json"
+      wget.download(url, "data/symbols.json")
 
 
 def ingest_data(client):
@@ -19,17 +23,19 @@ def ingest_data(client):
     # ===== Define the collection =====
     symbols = client.collections.create(
         name="Symbols",
-        # The OpenAI vectorizer seems quicker.
-        # vectorizer_config=wvc.config.Configure.Vectorizer.text2vec_openai (),  # If set to "none" you must always provide vectors yourself. Could be any other "text2vec-*" also.
-        vectorizer_config=wvc.config.Configure.Vectorizer.text2vec_huggingface(wait_for_model=True),  # If set to "none" you must always provide vectors yourself. Could be any other "text2vec-*" also.
-        generative_config=wvc.config.Configure.Generative.openai(),  # Ensure the `generative-openai` module is used for generative queries
+        # The OpenAI vectorizer seems quicker. If set to "none" you must always provide vectors yourself. 
+        # Could be any other "text2vec-*" also.
+        # vectorizer_config=wvc.config.Configure.Vectorizer.text2vec_openai (),
+        vectorizer_config=wvc.config.Configure.Vectorizer.text2vec_huggingface(wait_for_model=True),
+        # Ensure the `generative-openai` module is used for generative queries 
+        generative_config=wvc.config.Configure.Generative.openai(),
     )
 
     # Settings for displaying the import progress
     counter = 0
-    interval = 100  # print progress every this many records; should be bigger than the batch_size
+    interval = 100  # Print progress every this many records; should be bigger than the batch_size
 
-    print("JSON streaming, to avoid running out of memory on large files...")
+    logging.info("JSON streaming, to avoid running out of memory on large files...")
     with client.batch.fixed_size(batch_size=50) as batch:
         with open("data/symbols.json", "rb") as f:
             objects = ijson.items(f, "item")
@@ -96,10 +102,10 @@ def ingest_data(client):
                 # Calculate and display progress
                 counter += 1
                 if counter % interval == 0:
-                    print(f"Imported {counter} symbols.")
+                    logging.info(f"Imported {counter} symbols.")
 
 
-    print(f"Finished importing {counter} symbols.")
+    logging.info(f"Finished importing {counter} symbols.")
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO)
@@ -125,11 +131,11 @@ if __name__ == '__main__':
 
         client.collections.delete("Symbols")
 
-        print('\nIngesting data\n')
+        logging.info('\nIngesting data\n')
         ingest_data(client)
 
         symbols = client.collections.get("Symbols")
-        print(f'symbols: {symbols}')
+        logging.info(f'symbols: {symbols}')
 
         if client.is_ready():
             logging.info('')
@@ -139,5 +145,5 @@ if __name__ == '__main__':
                 logging.info(node)
                 logging.info('')
     finally:
-        client.close()  # Close client gracefully
+        client.close()
 
