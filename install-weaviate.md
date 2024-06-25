@@ -73,93 +73,10 @@ Sample output
   }
 }
 ```
-## Sample Applications
-
-1) Create a python virtual environment and try a few of the [example clients](src). The first two python examples expect the `WEAVIATE_HOST` and `WEAVIATE_API_KEY` variables to be set.
-```bash
-python -m venv ~/venv
-source ~/venv/bin/activate
-cd src
-pip install -r requirements.txt
-```
-```bash
-export WEAVIATE_HOST=https://$(oc get routes weaviate -n ${PROJ} -o jsonpath='{.spec.host}')
-```
-```bash
-export WEAVIATE_API_KEY='weaviate-api-key-from-values-file-above'
-```
-
-2) Test the connection with the python sdk.
-
-```bash
-python 00-test-connection.py 
-```
-A shard should be reported for each Weaviate node.
-
-Sample output:
-```bash
-INFO:root:{'batchStats': {'queueLength': 0, 'ratePerSecond': 0}, 'gitHash': '8172acb', 'name': 'weaviate-0', 'shards': None, 'stats': {'objectCount': 0, 'shardCount': 0}, 'status': 'HEALTHY', 'version': '1.21.0'}
-INFO:root:
-INFO:root:{'batchStats': {'queueLength': 0, 'ratePerSecond': 0}, 'gitHash': '8172acb', 'name': 'weaviate-1', 'shards': None, 'stats': {'objectCount': 0, 'shardCount': 0}, 'status': 'HEALTHY', 'version': '1.21.0'}
-INFO:root:
-INFO:root:{'batchStats': {'queueLength': 0, 'ratePerSecond': 0}, 'gitHash': '8172acb', 'name': 'weaviate-2', 'shards': None, 'stats': {'objectCount': 0, 'shardCount': 0}, 'status': 'HEALTHY', 'version': '1.21.0'}
-INFO:root:
-```
-
-3) Create a schema and import some objects.
-
-This example requires a [HuggingFace api token](https://huggingface.co/settings/tokens) to create vectors.
-```bash
-export HUGGINGFACE_API_KEY=your-huggingface-api-key
-```
-```bash
-python 01-create-schema-import-data.py
-```
-The first time running may produce the following error if the huggingface transformer model is not quite ready.
-```
-{'error': [{'message': 'update vector: failed with status: 503 error: Model sentence-transformers/msmarco-bert-base-dot-v5 is currently loading estimated time: 20'}]}
-```
-
-Sample output:
-```
-WEAVIATE_HOST: https://weaviate-weaviate.apps.ocp.sandbox1234.openshift.com
-
-WEAVIATE_HOST: https://weaviate-weaviate.apps.ocp.sandbox1234.openshift.com is_ready() = True
-
-Creating a class using the text2vec-huggingface vectorizer.
-Question class already exists, skipping
-importing question: 1
-importing question: 2
-...
-```
-
-4) Perform a semantic search.
-
-```bash
-python 02-semantic-search.py
-```
-
-5) Perform a retrieval augmented generative search.
-
-
-This generative AI example requires an [OpenAI API token](https://platform.openai.com/account/api-keys).
-```
-export OPENAI_API_KEY=my_openai_api_key
-```
-```
-python 03-generative-search.py
-```
-
-6) Run the Gradio front end application example and visit
-the port reported with a web browser.
-```bash
-python 05-gradio
-```
-
-7) Use the [Weaviate Cloud Console](https://console.weaviate.cloud/) to make GraphQL queries.
+1) Use the [Weaviate Cloud Console](https://console.weaviate.cloud/) to make GraphQL queries.
 
 - Add an Openshift route for your external cluster.
-- Navigate to the query editor and configure the header.
+- Navigate to the query editor and configure the header as follows.
 ```json
 {
   "Authorization" : "Bearer my-weaviate-api-key",
@@ -168,36 +85,40 @@ python 05-gradio
 ```
 
 - Enter the following sample GraphQL:
-```
+```json
 {
   Get {
-    Question (
-      nearText: {
-        concepts: ["World history"]
-      }
-      limit: 2
+    Symbols(
+       nearText: {
+        concepts: ["Computers"]
+      } limit: 2
     ) {
-      question
-      _additional {
-        generate(
-          singleResult: {
-            prompt: """
-              Convert the following into a question for twitter. Include emojis for fun, but do not include the answer: {question}.
-            """
-          }
-        ) {
-          singleResult
-          error
-        }
-      }
+      symbol
+      name
+      description
     }
   }
 }
 ```
 
-
-8) Delete the schema if necessary.
-
-```bash
-python 04-delete-schema.py
+Example output
+```json
+{
+  "data": {
+    "Get": {
+      "Symbols": [
+        {
+          "description": "Advanced Micro Devices, Inc. (AMD) is an American multinational semiconductor company based in Santa Clara, California, that develops computer processors and related technologies for business and consumer markets. AMD's main products include microprocessors, motherboard chipsets, embedded processors and graphics processors for servers, workstations, personal computers and embedded system applications.",
+          "name": "Advanced Micro Devices Inc",
+          "symbol": "AMD"
+        },
+        {
+          "description": "Microsoft Corporation is an American multinational technology company which produces computer software, consumer electronics, personal computers, and related services. Its best known software products are the Microsoft Windows line of operating systems, the Microsoft Office suite, and the Internet Explorer and Edge web browsers. Its flagship hardware products are the Xbox video game consoles and the Microsoft Surface lineup of touchscreen personal computers. Microsoft ranked No. 21 in the 2020 Fortune 500 rankings of the largest United States corporations by total revenue; it was the world's largest software maker by revenue as of 2016. It is considered one of the Big Five companies in the U.S. information technology industry, along with Google, Apple, Amazon, and Facebook.",
+          "name": "Microsoft Corporation",
+          "symbol": "MSFT"
+        }
+      ]
+    }
+  }
+}
 ```
