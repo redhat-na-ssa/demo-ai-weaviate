@@ -168,7 +168,7 @@ if __name__ == '__main__':
                 inputs=semantic_input_text, label="Example search concepts:"
                 )
             limit_slider = gr.Slider(label="Adjust the query return limit. (Optional)",value=2, minimum=1, maximum=5, step=1)
-            state = gr.State(value=2)
+            # state = gr.State(value=2)
             vdb_button = gr.Button(value="Search the financial vector database.")
             vdb_button.click(fn=semantic_search, inputs=[semantic_input_text, limit_slider], outputs=gr.Textbox(label="Search Results (Filters = Name)"))
             
