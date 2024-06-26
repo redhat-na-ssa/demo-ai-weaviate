@@ -14,6 +14,10 @@
 # sed '/Error/d' tmp1.json > tmp2.json
 # mv tmp2.json symbols.json
 #
+# or use a pipe
+#
+# sed '/^{},$/d' output.json | sed '/Error/d'
+#
 
 import requests
 import pandas as pd
