@@ -1,7 +1,7 @@
 # Summarizing Financial Data with a RAG workflow using [Weaviate](https://weaviate.io/) and [Red Hat OpenShift:](https://developers.redhat.com/developer-sandbox)
 
 ![rag-demo](images/retrieval-augmented-generation.jpg "retrieval augmented generative search")
-*High Level Architecture*
+*High Level Components*
 
 ### Overview
 This demonstration imports financial data from [AlphaVantage](https://www.alphavantage.co)
@@ -12,8 +12,8 @@ The Weaviate database is installed on Openshift as a stateful set providing
 a data parallel enterprise deployment. For the application developer, Openshift DevSpaces offers a full IDE experience
 within a Kubernetes environment. Finally, a simple example application based on Hugging Face's Gradio framework provides a user front-end.
 
-![financial-rag](images/finance-rag.png "Financial summary using RAG")
-*Application Screen Shot*
+![dataflow](images/dataflow.jpg "Dataflow")
+*Dataflow*
 
 To build the vector database, a number of company overviews are downloaded using 
 [AlphaVantage's Stock Market API](https://www.alphavantage.co/query?function=OVERVIEW&symbol=IBM&apikey=demo)
@@ -26,6 +26,8 @@ similar to the concept. Finally, a generative search is performed using a
 financial summary which is presented to the user. It is important to note that the summary is 
 based on the financial data from the original company overview database and not the GPT-3 model.  
 
+![financial-rag](images/finance-rag.png "Financial summary using RAG")
+*Application Screen Shot*
 ### What's needed:
 - Access to [Red Hat Openshift](https://developers.redhat.com/developer-sandbox).
 - A [HuggingFace API key](https://huggingface.co/settings/tokens) for embeddings.
