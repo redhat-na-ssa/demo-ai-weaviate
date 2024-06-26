@@ -39,7 +39,8 @@ if __name__ == '__main__':
             grpc_port=50051,
             grpc_secure=False,
             skip_init_checks=False,
-            headers={"X-OpenAI-Api-key": os.getenv("OPENAI_API_KEY")}
+            headers={"X-OpenAI-Api-key": os.getenv("OPENAI_API_KEY"),
+                     "X-Huggingface-Api-key": os.getenv("HUGGINGFACE_API_KEY")}
         )
 
         symbols = client.collections.get("Symbols")
