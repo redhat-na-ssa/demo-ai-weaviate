@@ -135,7 +135,7 @@ if __name__ == '__main__':
         ingest_data(client)
 
         symbols = client.collections.get("Symbols")
-        logging.info(f'symbols: {symbols}')
+        # logging.info(f'symbols: {symbols}')
 
         if client.is_ready():
             logging.info('')
