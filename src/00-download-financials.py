@@ -24,6 +24,8 @@ import pandas as pd
 import json
 import time
 import os
+import urllib
+from urllib.parse import urlparse
 
 #
 # AlphaVantage API key 
@@ -48,7 +50,8 @@ def retrieve_data(function: str, symbol: str, api_key: str) -> dict:
     Documentation located at: https://www.alphavantage.co/documentation
     """
     # query from API
-    url = f'https://www.alphavantage.co/query?function={function}&symbol={symbol}&apikey={api_key}'
+    encoded_symbol = urllib.parse.quote(symbol, safe='')
+    url = f'https://www.alphavantage.co/query?function={function}&symbol={encoded_symbol}&apikey={api_key}'
     response = requests.get(url)
     # read output
     data = response.text
@@ -63,8 +66,8 @@ def retrieve_data_to_csv(function: str, symbol: str, api_key: str) -> dict:
     Documentation located at: https://www.alphavantage.co/documentation
     """
     # query from API
-    url = f'https://www.alphavantage.co/query?function={function}&symbol={symbol}&apikey={api_key}'
-    
+    encoded_symbol = urllib.parse.quote(symbol, safe='')
+    url = f'https://www.alphavantage.co/query?function={function}&symbol={encoded_symbol}&apikey={api_key}'    
 
     response = requests.get(url)
     # read output
