@@ -9,9 +9,13 @@ import requests
 import json
 import weaviate
 
-# Ollama API endpoint and models.
-# ollama_api_endpoint = "http://rhel9.sandbox2640.opentlc.com:11434"
-# ollama_api_endpoint = "https://ollama-ollama.apps.ocp.sandbox2640.opentlc.com"
+#
+# Environment variables
+#
+# export WEAVIATE_API_KEY=your-weaviate-api-key
+# export WEAVIATE_HOST=weaviate.weaviate
+# export OLLAMA_API_ENDPOINT=https://my-ollama-api-server.domain.com
+
 ollama_api_endpoint = os.getenv("OLLAMA_API_ENDPOINT")
 ollama_vectorizer_model = model = "all-minilm"
 ollama_generative_model="llama3"
@@ -33,8 +37,8 @@ def connect_weaviate_custom():
     client = weaviate.connect_to_custom(
         http_host=weaviate_host,
         auth_credentials=AuthApiKey(weaviate_key),
-        http_port=443,
-        http_secure=True,
+        http_port=80,
+        http_secure=False,
         grpc_host="weaviate-grpc.weaviate",
         grpc_port=50051,
         grpc_secure=False,
