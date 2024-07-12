@@ -21,10 +21,10 @@ and imported into Weaviate. This represents a private knowledgebase. Each overvi
 consists of a short description along with sampling of financial metrics such as market
 capitalization, book value and earnings per share just to name a few. A user can then query 
 the database using a natural language and Weaviate will return companies that are most 
-similar to the concept. Finally, a generative search is performed using a 
-[GPT-3](https://openai.com/blog/openai-api/) large language model (LLM) to generate a 
+similar to the concept. Finally, a generative search is performed using the
+[llama3](https://github.com/meta-llama/llama3.git) large language model (LLM) to generate a 
 financial summary which is presented to the user. It is important to note that the summary is 
-based on the financial data from the original company overview database and not the GPT-3 model.  
+based on the financial data from the original company overview database and not the LLM.  
 
 ![financial-rag](images/finance-rag.png "Financial summary using RAG")
 *Application Screen Shot*
