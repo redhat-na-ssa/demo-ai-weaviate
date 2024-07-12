@@ -14,7 +14,7 @@ def download_data():
       logging.info("Symbols already downloaded")
     except:
       logging.info("Downloading symbols...")
-      url = "https://koz-data.s3.us-east-2.amazonaws.com/symbols.json"
+      url = "https://people.redhat.com/bkozdemb/downloads/symbols.json"
       wget.download(url, "data/symbols.json")
 
 
