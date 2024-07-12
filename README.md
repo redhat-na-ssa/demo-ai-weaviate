@@ -70,9 +70,12 @@ based on the financial data from the original company overview database and not 
 ```bash
 python src/00-test-connection.py
 ```
-2. Import the data.
+2. Import the data. An important note is that the hostname and model name of the
+ollama vectorizer gets embedded into the Weaviate collection. This means the `03-app.py`
+application expects to find a Weaviate instance with a vectorizer configured the
+same.
 ```bash
-python src/01-import.py
+python src/01-import-csv.py
 ```
 3. Validate the Weaviate collection.
 ```bash
