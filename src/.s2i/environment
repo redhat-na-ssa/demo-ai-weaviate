@@ -1,2 +1,5 @@
 APP_HOME=/opt/app-root/src
 APP_FILE=03-app.py
+WEAVIATE_API_KEY=your-weaviate-api-key
+WEAVIATE_HOST=weaviate.weaviate
+OLLAMA_API_ENDPOINT=ollama-server.your-domain
