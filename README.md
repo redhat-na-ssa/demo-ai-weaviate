@@ -30,8 +30,18 @@ based on the financial data from the original company overview database and not 
 *Application Screen Shot*
 ### What's needed:
 - Access to [Red Hat Openshift](https://developers.redhat.com/developer-sandbox).
-- A [HuggingFace API key](https://huggingface.co/settings/tokens) for embeddings.
-- An [OpenAI API key](https://platform.openai.com/account/api-keys) for generative searches.
+- An [AlphaVantage API key](https://www.alphavantage.co/support/#api-key) if you want to download fresh stock symbol data.
+- An [Ollama server running on Openshift](https://github.com/williamcaban/ollama-ubi) installed 
+in the `ollama` namespace.
+      - The `all-minilm` and `llama` models should be 
+      [pulled](https://github.com/ollama/ollama/blob/main/docs/api.md#pull-a-model) after install.
+
+### Environment Variables
+```bash
+export WEAVIATE_API_KEY=your-weaviate-admin-api-key
+export WEAVIATE_HOST=weaviate.weaviate
+export OLLAMA_API_ENDPOINT=http://ollama-svc.ollama
+```
 
 ### Why run Weaviate On Openshift?
 - Support for [Distributed Architectures](https://weaviate.io/developers/weaviate/concepts/replication-architecture).
