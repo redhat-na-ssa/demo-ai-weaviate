@@ -25,10 +25,14 @@ def ingest_data(client):
         name="Symbols",
         # The OpenAI vectorizer seems quicker. If set to "none" you must always provide vectors yourself. 
         # Could be any other "text2vec-*" also.
-        # vectorizer_config=wvc.config.Configure.Vectorizer.text2vec_openai (),
-        vectorizer_config=wvc.config.Configure.Vectorizer.text2vec_huggingface(wait_for_model=True),
-        # Ensure the `generative-openai` module is used for generative queries 
-        generative_config=wvc.config.Configure.Generative.openai(),
+        vectorizer_config=wvc.config.Configure.Vectorizer.text2vec_ollama(
+            api_endpoint=ollama_api_endpoint,
+            model=ollama_vectorizer_model
+        ),
+        generative_config=wvc.config.Configure.Generative.ollama(
+            api_endpoint=ollama_api_endpoint,
+            model=ollama_generative_model
+        )
     )
 
     # Settings for displaying the import progress
@@ -112,6 +116,9 @@ if __name__ == '__main__':
     try:
         download_data()
 
+        ollama_api_endpoint = os.getenv("OLLAMA_API_ENDPOINT")
+        ollama_vectorizer_model = model = "all-minilm"
+        ollama_generative_model="llama3"
         weaviate_host = os.getenv("WEAVIATE_HOST")
         weaviate_key = os.getenv("WEAVIATE_API_KEY")
 
@@ -124,10 +131,8 @@ if __name__ == '__main__':
             grpc_host="weaviate-grpc.weaviate",
             grpc_port=50051,
             grpc_secure=False,
-            skip_init_checks=False,
-            headers={"X-OpenAI-Api-key": os.getenv("OPENAI_API_KEY"),
-                "X-Huggingface-Api-key": os.getenv("HUGGINGFACE_API_KEY")}
-        )
+            skip_init_checks=False
+            )
 
         client.collections.delete("Symbols")
 

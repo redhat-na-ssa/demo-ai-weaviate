@@ -16,7 +16,7 @@ if __name__ == '__main__':
         grpc_host="weaviate-grpc.weaviate",
         grpc_port=50051,
         grpc_secure=False,
-        skip_init_checks=False
+        skip_init_checks=True
     )
 
     if client.is_ready():

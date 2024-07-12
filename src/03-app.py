@@ -6,6 +6,31 @@ import requests
 import json
 import ijson
 import gradio as gr
+import logging
+
+def connect_weaviate_custom():
+    weaviate_host = os.getenv("WEAVIATE_HOST")     
+    weaviate_key = os.getenv("WEAVIATE_API_KEY")
+
+    logging.basicConfig(level=logging.INFO)
+    logging.info(f'OLLAMA_API_ENDPOINT = {ollama_api_endpoint}')
+    if weaviate_host == None:
+        logging.error('WEAVIATE_HOST not set')
+        return None
+        
+    logging.info(f'Connecting to Weaviate local instance at {weaviate_host}')
+
+    client = weaviate.connect_to_custom(
+        http_host=weaviate_host,
+        auth_credentials=AuthApiKey(weaviate_key),
+        http_port=80,
+        http_secure=False,
+        grpc_host="weaviate-grpc.weaviate",
+        grpc_port=50051,
+        grpc_secure=False,
+        skip_init_checks=True
+    )
+    return client
 
 def semantic_search(query='computers', limit=2) -> dict:
     print(f'\nSemantic Search, query = {query}.')
@@ -34,22 +59,15 @@ def generative_search(query='computers', task=None, limit=2) -> str:
 
  
 if __name__ == '__main__':
+    logging.basicConfig(level=logging.INFO)
+    ollama_api_endpoint = os.getenv("OLLAMA_API_ENDPOINT")
+    ollama_vectorizer_model = model = "all-minilm"
+    ollama_generative_model="llama3"
     weaviate_host = os.getenv("WEAVIATE_HOST")       
     weaviate_key = os.getenv("WEAVIATE_API_KEY")
 
     try:
-        client = weaviate.connect_to_custom(
-                    http_host=weaviate_host,
-                    auth_credentials=AuthApiKey(weaviate_key),
-                    http_port=80,
-                    http_secure=False,
-                    grpc_host="weaviate-grpc.weaviate",
-                    grpc_port=50051,
-                    grpc_secure=False,
-                    skip_init_checks=False,
-                    headers={"X-OpenAI-Api-key": os.getenv("OPENAI_API_KEY"),
-                        "X-Huggingface-Api-key": os.getenv("HUGGINGFACE_API_KEY")}
-                )
+        client = connect_weaviate_custom()
 
         symbols = client.collections.get("Symbols")
         

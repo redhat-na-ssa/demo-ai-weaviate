@@ -21,17 +21,27 @@ and imported into Weaviate. This represents a private knowledgebase. Each overvi
 consists of a short description along with sampling of financial metrics such as market
 capitalization, book value and earnings per share just to name a few. A user can then query 
 the database using a natural language and Weaviate will return companies that are most 
-similar to the concept. Finally, a generative search is performed using a 
-[GPT-3](https://openai.com/blog/openai-api/) large language model (LLM) to generate a 
+similar to the concept. Finally, a generative search is performed using the
+[llama3](https://github.com/meta-llama/llama3.git) large language model (LLM) to generate a 
 financial summary which is presented to the user. It is important to note that the summary is 
-based on the financial data from the original company overview database and not the GPT-3 model.  
+based on the financial data from the original company overview database and not the LLM.  
 
 ![financial-rag](images/finance-rag.png "Financial summary using RAG")
 *Application Screen Shot*
 ### What's needed:
 - Access to [Red Hat Openshift](https://developers.redhat.com/developer-sandbox).
-- A [HuggingFace API key](https://huggingface.co/settings/tokens) for embeddings.
-- An [OpenAI API key](https://platform.openai.com/account/api-keys) for generative searches.
+- An [AlphaVantage API key](https://www.alphavantage.co/support/#api-key) if you want to download fresh stock symbol data.
+- An [Ollama server running on Openshift](https://github.com/williamcaban/ollama-ubi) installed 
+in the `ollama` namespace.
+      - The `all-minilm` and `llama` models should be 
+      [pulled](https://github.com/ollama/ollama/blob/main/docs/api.md#pull-a-model) after install.
+
+### Environment Variables
+```bash
+export WEAVIATE_API_KEY=your-weaviate-admin-api-key
+export WEAVIATE_HOST=weaviate.weaviate
+export OLLAMA_API_ENDPOINT=http://ollama-svc.ollama
+```
 
 ### Why run Weaviate On Openshift?
 - Support for [Distributed Architectures](https://weaviate.io/developers/weaviate/concepts/replication-architecture).
@@ -70,9 +80,12 @@ based on the financial data from the original company overview database and not 
 ```bash
 python src/00-test-connection.py
 ```
-2. Import the data.
+2. Import the data. An important note is that the hostname and model name of the
+ollama vectorizer gets embedded into the Weaviate collection. This means the `03-app.py`
+application expects to find a Weaviate instance with a vectorizer configured the
+same.
 ```bash
-python src/01-import.py
+python src/01-import-csv.py
 ```
 3. Validate the Weaviate collection.
 ```bash
