@@ -33,8 +33,7 @@ based on the financial data from the original company overview database and not 
 - An [AlphaVantage API key](https://www.alphavantage.co/support/#api-key) if you want to download fresh stock symbol data.
 - An [Ollama server running on Openshift](https://github.com/williamcaban/ollama-ubi) installed 
 in the `ollama` namespace.
-      - The `all-minilm` and `llama` models should be 
-      [pulled](https://github.com/ollama/ollama/blob/main/docs/api.md#pull-a-model) after install.
+  - The `all-minilm` and `llama3` models should be [pulled](https://github.com/ollama/ollama/blob/main/docs/api.md#pull-a-model) after install.
 
 ### Environment Variables
 ```bash
