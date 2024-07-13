@@ -16,11 +16,12 @@ import weaviate
 # export WEAVIATE_HOST=weaviate.weaviate
 # export OLLAMA_API_ENDPOINT=https://my-ollama-api-server.domain.com
 
-ollama_api_endpoint = os.getenv("OLLAMA_API_ENDPOINT")
+ollama_api_endpoint = os.getenv("OLLAMA_API_ENDPOINT", "http://localhost:11434")
 ollama_vectorizer_model = model = "all-minilm"
 ollama_generative_model="llama3"
 
 logging.basicConfig(level=logging.INFO)
+logging.info(f'OLLAMA_API_ENDPOINT = {ollama_api_endpoint}')
 
 def connect_weaviate_custom():
     weaviate_host = os.getenv("WEAVIATE_HOST")     
@@ -55,8 +56,8 @@ def connect_weaviate_embedded():
     )
     return client
 
-client = connect_weaviate_custom()
-# client = connect_weaviate_embedded()
+# client = connect_weaviate_custom()
+client = connect_weaviate_embedded()
 
 if client.is_ready():
     logging.info('')
@@ -65,7 +66,7 @@ if client.is_ready():
     for node in client.cluster.nodes():
         logging.info(node)
         logging.info('')
-    logging.info(f'*************** client.get_meta(): {client.get_meta()}')
+    logging.info(f'client.get_meta(): {client.get_meta()}')
 else:
     logging.error("Client is not ready")
 
@@ -138,7 +139,7 @@ with gr.Blocks(title="Search the Jeopardy Vector Database. (powered by Weaviate 
             ]
             semantic_input_text = gr.Textbox(label="Enter a search concept or choose an example below:", value=semantic_examples[0][0])
             gr.Examples(semantic_examples, inputs=semantic_input_text, label="Example search concepts:")
-            vdb_button = gr.Button(value="Search the Jeopardy Vector Database.")
+            vdb_button = gr.Button(value="Search and Summarize the Jeopardy Vector Database.")
             vdb_button.click(fn=respond, inputs=[semantic_input_text], outputs=gr.Textbox(label="Search Results"))
             
 
