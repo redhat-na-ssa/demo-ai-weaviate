@@ -9,13 +9,16 @@ import gradio as gr
 import logging
 
 def connect_weaviate_custom():
-    weaviate_host = os.getenv("WEAVIATE_HOST")     
-    weaviate_key = os.getenv("WEAVIATE_API_KEY")
+    # weaviate_host = os.getenv("WEAVIATE_HOST", "weaviate.weavate")     
+    # weaviate_key = os.getenv("WEAVIATE_API_KEY")
 
-    logging.basicConfig(level=logging.INFO)
-    logging.info(f'OLLAMA_API_ENDPOINT = {ollama_api_endpoint}')
-    if weaviate_host == None:
-        logging.error('WEAVIATE_HOST not set')
+    # logging.basicConfig(level=logging.INFO)
+    # logging.info(f'OLLAMA_API_ENDPOINT = {ollama_api_endpoint}')
+    if weaviate_key == None:
+        logging.error('')
+        logging.error('WEAVIATE_API_KEY not set!')
+        logging.error('Please set WEAVIATE_API_KEY environment variable.')
+        logging.error('')
         return None
         
     logging.info(f'Connecting to Weaviate local instance at {weaviate_host}')
@@ -60,16 +63,20 @@ def generative_search(query='computers', task=None, limit=2) -> str:
  
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO)
-    ollama_api_endpoint = os.getenv("OLLAMA_API_ENDPOINT")
-    ollama_vectorizer_model = model = "all-minilm"
-    ollama_generative_model="llama3"
-    weaviate_host = os.getenv("WEAVIATE_HOST")       
+    # ollama_api_endpoint = os.getenv("OLLAMA_API_ENDPOINT")
+    # ollama_vectorizer_model = model = "all-minilm"
+    # ollama_generative_model="llama3:8b-instruct-q8_0"
+    weaviate_host = os.getenv("WEAVIATE_HOST", "weaviate.weavate")       
     weaviate_key = os.getenv("WEAVIATE_API_KEY")
 
+    #
+    # Need to improve the error handling here.
+    #
     try:
         client = connect_weaviate_custom()
 
         symbols = client.collections.get("Symbols")
+        print(f'Connected to Weaviate at {weaviate_host}!')
         
         #
         # Build the Gradio user interface.
