@@ -14,7 +14,7 @@ def download_data():
       logging.info("Symbols already downloaded")
     except:
       logging.info("Downloading symbols...")
-      url = "https://people.redhat.com/bkozdemb/downloads/symbols.json"
+      url = "https://koz-data.s3.us-east-2.amazonaws.com/symbols.json"
       wget.download(url, "data/symbols.json")
 
 
@@ -23,8 +23,6 @@ def ingest_data(client):
     # ===== Define the collection =====
     symbols = client.collections.create(
         name="Symbols",
-        # The OpenAI vectorizer seems quicker. If set to "none" you must always provide vectors yourself. 
-        # Could be any other "text2vec-*" also.
         vectorizer_config=wvc.config.Configure.Vectorizer.text2vec_ollama(
             api_endpoint=ollama_api_endpoint,
             model=ollama_vectorizer_model
@@ -118,7 +116,7 @@ if __name__ == '__main__':
 
         ollama_api_endpoint = os.getenv("OLLAMA_API_ENDPOINT")
         ollama_vectorizer_model = model = "all-minilm"
-        ollama_generative_model="llama3"
+        ollama_generative_model="llama3:8b-instruct-q8_0"
         weaviate_host = os.getenv("WEAVIATE_HOST")
         weaviate_key = os.getenv("WEAVIATE_API_KEY")
 

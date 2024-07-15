@@ -21,6 +21,7 @@ def semantic_search(query='computers', limit=2) -> dict:
         return_list.append(response.objects[i].properties['name'])
     return return_list
 
+client = None
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO)
     try:
@@ -53,8 +54,9 @@ if __name__ == '__main__':
             for node in client.cluster.nodes():
                 logging.info(node)
                 logging.info('')
-            print(semantic_search())
-
+            print(semantic_search("IBM"))
+            symbols = client.collections.get("Symbols")
+            print(f'symbols: {symbols}')
     finally:
         client.close()  # Close client gracefully
 
