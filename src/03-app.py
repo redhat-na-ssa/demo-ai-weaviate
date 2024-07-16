@@ -1,6 +1,7 @@
 import weaviate
 import weaviate.classes as wvc
 from weaviate.auth import AuthApiKey
+from weaviate.classes.init import AdditionalConfig, Timeout
 import os
 import requests
 import json
@@ -31,7 +32,10 @@ def connect_weaviate_custom():
         grpc_host="weaviate-grpc.weaviate",
         grpc_port=50051,
         grpc_secure=False,
-        skip_init_checks=True
+        skip_init_checks=True,
+        additional_config=AdditionalConfig(
+            timeout=Timeout(init=30, query=60, insert=120)  # Values in seconds
+            )
     )
     return client
 
@@ -114,7 +118,7 @@ if __name__ == '__main__':
             # Generative Search 
             # 
             prompt_examples = [
-                ["Summarize the information from a financial perspective."],
+                ["Provide a paragraph for each company that summarizes the information from a financial perspective."],
                 ["Summarize the information from a financial investment perspective."],
                 ["Summarize the potential financial investment risks and rewards."]
             ]
@@ -131,7 +135,7 @@ if __name__ == '__main__':
             outputs=gr.Textbox(label="Summary"))
             
         demo.queue(max_size=10)
-        demo.launch(server_name='0.0.0.0', server_port=8080)
+        demo.launch(server_name='0.0.0.0', server_port=8080, share=False)
 
     finally:
         client.close()  # Close client gracefully
