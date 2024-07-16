@@ -45,7 +45,7 @@ WEAVIATE_HOST | The hostname of the Weaviate service | weaviate.weaviate
 ALPHA_VANTAGE_API_KEY | AlphaVantage API Key | None
 OLLAMA_HOST | The hostname of the Openshift Ollama service | http://ollama-svc.ollama
 OLLAMA_VECTORIZER | The name of the Ollama vectorizer model | all-minilm
-OLLAMA_LLM | The name of the Ollama language model | llama3:latest
+OLLAMA_LLM | The name of the Ollama language model | llama3:8b-instruct-q8_0
 
 ### Why run Weaviate On Openshift?
 - Support for [Distributed Architectures](https://weaviate.io/developers/weaviate/concepts/replication-architecture).
