@@ -4,7 +4,7 @@
 *High Level Components*
 
 ### Overview
-This demonstration imports financial data from [AlphaVantage](https://www.alphavantage.co)
+This demonstration imports and syncronizes financial data from [AlphaVantage](https://www.alphavantage.co)
 into [Weaviate's vector database](https://weaviate.io) which in turn uses a large language model to generate a summary 
 in a traditional RAG workflow.
 
@@ -28,19 +28,6 @@ based on the financial data from the original company overview database and not 
 
 ![financial-rag](images/finance-rag.png "Financial summary using RAG")
 *Application Screen Shot*
-### What's needed:
-- Access to [Red Hat Openshift](https://developers.redhat.com/developer-sandbox).
-- An [AlphaVantage API key](https://www.alphavantage.co/support/#api-key) if you want to download fresh stock symbol data.
-- An [Ollama server running on Openshift](https://github.com/williamcaban/ollama-ubi) installed 
-in the `ollama` namespace.
-  - The `all-minilm` and `llama3` models should be [pulled](https://github.com/ollama/ollama/blob/main/docs/api.md#pull-a-model) after install.
-
-### Environment Variables
-```bash
-export WEAVIATE_API_KEY=your-weaviate-admin-api-key
-export WEAVIATE_HOST=weaviate.weaviate
-export OLLAMA_API_ENDPOINT=http://ollama-svc.ollama
-```
 
 ### Why run Weaviate On Openshift?
 - Support for [Distributed Architectures](https://weaviate.io/developers/weaviate/concepts/replication-architecture).
@@ -48,57 +35,34 @@ export OLLAMA_API_ENDPOINT=http://ollama-svc.ollama
 - Access your cluster via the Weaviate Cloud Console with external routes.
 - Security (Doesn't run your containers as root)
 
-### Developer Tools: Eclipse-Che/DevSpaces
-- A full IDE experience with a code debugger.
-- Leverage many VSCode extensions.
-- In cluster terminal with CLI access to the Openshift API.
-- Deploy and test your app with port forwarding.
-- GitHub integration improves workflow efficiency.
-- Environment variables are read in as secrets.
-- DevSpaces is a no-cost add-on to Openshift
+### What's needed:
+- Access to [Red Hat Openshift](https://developers.redhat.com/developer-sandbox).
+- Install [Ollama server running on Openshift](https://github.com/williamcaban/ollama-ubi) installed 
+in the `ollama` namespace.
+  - The `all-minilm` and `llama3` models should be [pulled](https://github.com/ollama/ollama/blob/main/docs/api.md#pull-a-model) after install. This can be done using `curl` from an Openshift web terminal, DevSpaces or an external route.
+- A Weaviate instance installed in the `weaviate` namespace.
+- Follow the instructions to install the [stock symbol overview ingester](https://github.com/joshdreagan/av-overview-sync.git) in 
+the `camel` namespace.
+- An [AlphaVantage API key](https://www.alphavantage.co/support/#api-key) if you want to refresh the stock symbol data.
+
+### Environment Variables
+
+Name | Description | Default Value
+--- | --- | ---
+WEAVIATE_API_KEY | Weaviate Admin API Key | None
+WEAVIATE_HOST | The hostname of the Weaviate service | weaviate.weaviate
+ALPHA_VANTAGE_API_KEY | AlphaVantage API Key | None
+OLLAMA_HOST | The hostname of the Openshift Ollama service | http://ollama-svc.ollama
+OLLAMA_VECTORIZER | The name of the Ollama vectorizer model | all-minilm
+OLLAMA_LLM | The name of the Ollama language model | llama3
 
 ### Getting Started
-- Login to [Openshift](https://developers.redhat.com/developer-sandbox) and launch Openshift DevSpaces.
-- Create a new workspace by importing the git url `https://github.com/redhat-na-ssa/demo-ai-weaviate`
 
-
-### Setup DevSpaces for Python Development
-1. **VSCode Extensions** -> Confirm the Python IntelliSense extension is installed and enabled.
-1. **View -> Command Palette** -> Enter: `dev spaces: open openshift console`.
-1. Use the Openshift Web UI to **create a secret with environment variables**.
-   * **Secrets -> Create** and **Save** a new secret (from yaml) using this [example](che-env-vars.yaml). You may have to add a `metadata.namespace` field that contains your Developer Sandbox namespace and choose *Create*.
-   * **Edit ->** Scroll down to the data section and change the values in the secret to match your environment variables needed for the API keys and Weaviate URL then save. 
-   *  Now choose *Add Secret to workload*. DevSpaces will likely restart.
-1. Create a new python virtual environment
-      * *Terminal -> New Terminal**
-      * `python -m venv .venv`
-      * `source .venv/bin/activate`
-      * `pip install -r src/requirments.txt`
-1. Follow [these instructions](install-weaviate.md) to **install Weaviate**.
-1. Verify the connection to the Weaviate service.
-```bash
-python src/00-test-connection.py
-```
-2. Import the data. An important note is that the hostname and model name of the
-ollama vectorizer gets embedded into the Weaviate collection. This means the `03-app.py`
-application expects to find a Weaviate instance with a vectorizer configured the
-same.
-```bash
-python src/01-import-csv.py
-```
-3. Validate the Weaviate collection.
-```bash
-python src/02-check-collection.py
-```
-4. Run the application. DevSpaces should setup port forwarding so the application will appear in a web browser.
-```bash
-python src/03-app.py
-```
-### Move the app into production.
+### Deploy the application. 
 1. From the terminal, create an Openshift application.
 ```bash
-oc new-app python~https://github.com/redhat-na-ssa/demo-ai-weaviate#v4 --context-dir=/src --name=rag \
---env WEAVIATE_HOST=weaviate.weaviate --env WEAVIATE_API_KEY=your_weaviate_admin-api-key --env OPENAI_API_KEY=your_openai_api_key
+oc new-app python~https://github.com/redhat-na-ssa/demo-ai-weaviate --context-dir=/src --name=rag \
+--env WEAVIATE_API_KEY=your_weaviate_admin-api-key
 ```
 2. Expose the app with a route.
 ```bash

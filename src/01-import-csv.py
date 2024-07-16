@@ -14,7 +14,7 @@ def download_data():
       logging.info("Symbols already downloaded")
     except:
       logging.info("Downloading symbols...")
-      url = "https://koz-data.s3.us-east-2.amazonaws.com/symbols.json"
+      url = "https://people.redhat.com/bkozdemb/downloads/symbols.json"
       wget.download(url, "data/symbols.json")
 
 
@@ -114,13 +114,20 @@ if __name__ == '__main__':
     try:
         download_data()
 
-        ollama_api_endpoint = os.getenv("OLLAMA_API_ENDPOINT")
-        ollama_vectorizer_model = model = "all-minilm"
-        ollama_generative_model="llama3:8b-instruct-q8_0"
-        weaviate_host = os.getenv("WEAVIATE_HOST")
+        ollama_api_endpoint = os.getenv("OLLAMA_HOST", "http://ollama-svc.ollama")
+        ollama_vectorizer_model = model = os.getenv("OLLAMA_VECTORIZER", "all-minilm")
+        ollama_generative_model = os.getenv("OLLAMA_LLM","llama3:8b-instruct-q8_0")
+        weaviate_host = os.getenv("WEAVIATE_HOST", "weaviate.weaviate")
         weaviate_key = os.getenv("WEAVIATE_API_KEY")
 
         logging.basicConfig(level=logging.INFO)
+
+        if weaviate_key == None:
+            logging.error('')
+            logging.error('WEAVIATE_API_KEY not set!')
+            logging.error('Please set WEAVIATE_API_KEY environment variable.')
+            logging.error('')
+            
         client = weaviate.connect_to_custom(
             http_host=weaviate_host,
             auth_credentials=AuthApiKey(weaviate_key),

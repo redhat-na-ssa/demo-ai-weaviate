@@ -8,10 +8,8 @@ metadata:
   annotations:
     controller.devfile.io/mount-as: env
 data:
-  HUGGINGFACE_API_KEY: ''
-  OPENAI_API_KEY: ''
-  WEAVIATE_API_KEY: ''
-  WEAVIATE_URL: ''
-  COHERE_API_KEY: ''
+  WEAVIATE_API_KEY: Y2hhbmdlX21l
+  WEAVIATE_HOST: d2VhdmlhdGUud2VhdmlhdGU=
+  OLLAMA_HOST: aHR0cDovL29sbGFtYS5vbGxhbWE6MTE0MzQ=
 type: Opaque
 
