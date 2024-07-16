@@ -4,7 +4,7 @@
 *High Level Components*
 
 ### Overview
-This demonstration imports financial data from [AlphaVantage](https://www.alphavantage.co)
+This demonstration imports and syncronizes financial data from [AlphaVantage](https://www.alphavantage.co)
 into [Weaviate's vector database](https://weaviate.io) which in turn uses a large language model to generate a summary 
 in a traditional RAG workflow.
 
@@ -28,6 +28,7 @@ based on the financial data from the original company overview database and not 
 
 ![financial-rag](images/finance-rag.png "Financial summary using RAG")
 *Application Screen Shot*
+
 ### What's needed:
 - Access to [Red Hat Openshift](https://developers.redhat.com/developer-sandbox).
 - An [AlphaVantage API key](https://www.alphavantage.co/support/#api-key) if you want to refresh the stock symbol data.
@@ -35,6 +36,8 @@ based on the financial data from the original company overview database and not 
 in the `ollama` namespace.
   - The `all-minilm` and `llama3` models should be [pulled](https://github.com/ollama/ollama/blob/main/docs/api.md#pull-a-model) after install.
 - A Weaviate instance installed in the `weaviate` namespace.
+- [Red Hat Build for Apache Camel](https://github.com/joshdreagan/av-overview-sync.git) installed in 
+the `camel` namespace.
 
 ### Environment Variables
 
