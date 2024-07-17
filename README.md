@@ -1,4 +1,4 @@
-# Summarizing Financial Data with a RAG workflow using [Weaviate](https://weaviate.io/), [Red Hat OpenShift:](https://developers.redhat.com/developer-sandbox) and [Red Hat Build of Apache Camel](https://developers.redhat.com/products/redhat-build-of-apache-camel/overview).
+# Summarizing Financial Data with a RAG workflow using [Weaviate](https://weaviate.io/), [Red Hat OpenShift](https://developers.redhat.com/developer-sandbox) and [Red Hat Build of Apache Camel](https://developers.redhat.com/products/redhat-build-of-apache-camel/overview).
 
 ![rag-demo](images/retrieval-augmented-generation.jpg "retrieval augmented generative search")
 *High Level Components*
