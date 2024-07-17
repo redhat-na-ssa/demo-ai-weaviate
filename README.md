@@ -41,7 +41,8 @@ based on the financial data from the original company overview database and not 
 in the `ollama` namespace.
   - The `all-minilm` and `llama3` models should be [pulled](https://github.com/ollama/ollama/blob/main/docs/api.md#pull-a-model) after install. This can be done using `curl` or the `ollama` cli tool from an Openshift web terminal or DevSpaces.
 - A Weaviate instance installed in the `weaviate` namespace.
-- Follow the instructions to install the [stock symbol overview ingester](https://github.com/joshdreagan/av-overview-sync.git) in 
+- Follow the instructions to install the [AlphaVantage ingester](https://github.com/joshdreagan/av-overview-sync.git) 
+and [caching proxy](https://github.com/joshdreagan/av-caching-proxy.git) in 
 the `camel` namespace.
 - An [AlphaVantage API key](https://www.alphavantage.co/support/#api-key) if you want to refresh the stock symbol data.
 
