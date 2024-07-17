@@ -31,3 +31,11 @@ commands:
       commandLine: "python3 -m venv .venv && source .venv/bin/activate && pip install pip -Uq && pip install -r src/requirements.txt"
       group:
         kind: run
+  - id: install-ollama
+    exec:
+      label: "Install the Ollama binary"
+      component: tools
+      workingDir: ${PROJECT_SOURCE}
+      commandLine: "wget https://ollama.com/download/ollama-linux-amd64 -O $HOME/.local/bin/ollama && chmod 755 $HOME/.local/bin/ollama"
+      group:
+        kind: run
