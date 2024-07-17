@@ -39,7 +39,7 @@ based on the financial data from the original company overview database and not 
 - Access to [Red Hat Openshift](https://developers.redhat.com/developer-sandbox).
 - Install [Ollama server running on Openshift](https://github.com/williamcaban/ollama-ubi) installed 
 in the `ollama` namespace.
-  - The `all-minilm` and `llama3` models should be [pulled](https://github.com/ollama/ollama/blob/main/docs/api.md#pull-a-model) after install. This can be done using `curl` from an Openshift web terminal, DevSpaces or an external route.
+  - The `all-minilm` and `llama3` models should be [pulled](https://github.com/ollama/ollama/blob/main/docs/api.md#pull-a-model) after install. This can be done using `curl` or the `ollama` cli tool from an Openshift web terminal or DevSpaces.
 - A Weaviate instance installed in the `weaviate` namespace.
 - Follow the instructions to install the [stock symbol overview ingester](https://github.com/joshdreagan/av-overview-sync.git) in 
 the `camel` namespace.
