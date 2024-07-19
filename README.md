@@ -35,40 +35,49 @@ based on the financial data from the original company overview database and not 
 - Access your cluster via the Weaviate Cloud Console with external routes.
 - Security (Doesn't run your containers as root)
 
-### What's needed:
-- Access to [Red Hat Openshift](https://developers.redhat.com/developer-sandbox).
-- Install [Ollama server running on Openshift](https://github.com/williamcaban/ollama-ubi) installed 
-in the `ollama` namespace.
-  - The `all-minilm` and `llama3` models should be [pulled](https://github.com/ollama/ollama/blob/main/docs/api.md#pull-a-model) after install. This can be done using `curl` or the `ollama` cli tool from an Openshift web terminal or DevSpaces.
-- A Weaviate instance installed in the `weaviate` namespace.
-- Follow the instructions to install the [AlphaVantage ingester](https://github.com/joshdreagan/av-overview-sync.git) 
-and [caching proxy](https://github.com/joshdreagan/av-caching-proxy.git) in 
+### Prereqs:
+- `cluster-admin` access to [Red Hat Openshift](https://developers.redhat.com/developer-sandbox)
+- An [AlphaVantage API key](https://www.alphavantage.co/support/#api-key) 
+  - This is optional if you want to refresh the stock symbol data.
+
+### Manual Installation Steps
+
+#### Install the following services on Openshift.
+1. Weaviate Vector Database
+2. Ollama Model Server
+3. Stock Overview Ingestion Engine
+4. Gradio UI and application.
+
+##### Install Weaviate
+- [Install a Weaviate instance](install-weaviate.md) in the `weaviate` namespace.
+
+##### Install Ollama
+- Install an [Ollama model server](https://github.com/williamcaban/ollama-ubi) in the `ollama` namespace.
+  - The `all-minilm` and `llama3` models should be [pulled](https://github.com/ollama/ollama/blob/main/docs/api.md#pull-a-model) after install. This can be done using `curl` or the `ollama` cli tool from an Openshift or DevSpaces terminal.
+
+##### Stock Overview Ingestion Engine
+
+The stock overview ingestion engine consists of two components.
+- A Caching Proxy
+  - Follow the instructions to install the [caching proxy](https://github.com/joshdreagan/av-caching-proxy.git) in 
 the `camel` namespace.
-- An [AlphaVantage API key](https://www.alphavantage.co/support/#api-key) if you want to refresh the stock symbol data.
 
-### Environment Variables
+- A Stock Overview Syncronizer
+  - Follow the instructions to install the [AlphaVantage syncronizer](https://github.com/joshdreagan/av-overview-sync.git) in 
+the `camel` namespace.
 
-Name | Description | Default Value
---- | --- | ---
-WEAVIATE_API_KEY | Weaviate Admin API Key | None
-WEAVIATE_HOST | The hostname of the Weaviate service | weaviate.weaviate
-ALPHA_VANTAGE_API_KEY | AlphaVantage API Key | None
-OLLAMA_HOST | The hostname of the Openshift Ollama service | http://ollama-svc.ollama
-OLLAMA_VECTORIZER | The name of the Ollama vectorizer model | all-minilm
-OLLAMA_LLM | The name of the Ollama language model | llama3
-
-### Getting Started
-
-### Deploy the application. 
-1. From the terminal, create an Openshift application.
+##### Deploy the application. 
+1. From a terminal, create an Openshift application.
 ```bash
 oc new-app python~https://github.com/redhat-na-ssa/demo-ai-weaviate --context-dir=/src --name=rag \
 --env WEAVIATE_API_KEY=your_weaviate_admin-api-key
 ```
-2. Expose the app with a route.
+2. Expose the app with an external route and have fun.
 ```bash
 oc create route edge --service rag --insecure-policy='Redirect'
 ```
+
+#### Automated Installation (work in progress)
 
 ### Clean up
 ```bash
