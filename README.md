@@ -22,7 +22,7 @@ consists of a short description along with sampling of financial metrics such as
 capitalization, book value and earnings per share just to name a few. A user can then query 
 the database using a natural language and Weaviate will return companies that are most 
 similar to the concept. Finally, a generative search is performed using the
-[llama3](https://github.com/meta-llama/llama3.git) large language model (LLM) to generate a 
+[granite3-dense:8b](https://ollama.com/library/granite3-dense:8b) large language model (LLM) to generate a 
 financial summary which is presented to the user. It is important to note that the summary is 
 based on the financial data from the original company overview database and not the LLM.  
 
@@ -53,7 +53,7 @@ based on the financial data from the original company overview database and not 
 
 ##### Install Ollama
 - Install an [Ollama model server](https://github.com/williamcaban/ollama-ubi) in the `ollama` namespace.
-  - The `all-minilm` and `llama3` models should be [pulled](https://github.com/ollama/ollama/blob/main/docs/api.md#pull-a-model) after install. This can be done using `curl` or the `ollama` cli tool from an Openshift or DevSpaces terminal.
+  - The `all-minilm` and `granite3-dense:8b` models should be [pulled](https://github.com/ollama/ollama/blob/main/docs/api.md#pull-a-model) after install. This can be done using `curl` or the `ollama` cli tool from an Openshift or DevSpaces terminal.
 
 ##### Stock Overview Ingestion Engine
 
@@ -64,7 +64,7 @@ the `camel` namespace.
 
 - A Stock Overview Syncronizer
   - Follow the instructions to install the [AlphaVantage syncronizer](https://github.com/joshdreagan/av-overview-sync.git) in 
-the `camel` namespace.
+the `camel` namespace. Configure the `av-overview-sync-configmap` configmap to use the `granite3-dense:8b` model. 
 
 ##### Deploy the application. 
 1. From a terminal, create an Openshift application.
