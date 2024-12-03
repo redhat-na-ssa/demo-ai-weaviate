@@ -16,7 +16,7 @@ for Red Hat Openshift a project will already exist.
 To check for the existence of a project run `oc project`, otherwise use `oc new-project` to create one.
 
 ```bash
-PROJ=`weaviate`
+PROJ=weaviate
 ```
 
 ```bash
@@ -60,7 +60,7 @@ curl https://"${WEAVIATE_HOST}" | jq .
 ### Test using the service name. 
 ```bash
 export WEAVIATE_HOST="https://" + $(oc get routes weaviate -n ${PROJ} -o jsonpath='{.spec.host}')
-curl http://weaviate.weaviate | jq | jq .
+curl http://weaviate.weaviate | jq .
 ```
 
 Sample output
