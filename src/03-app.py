@@ -118,7 +118,7 @@ if __name__ == '__main__':
             # Generative Search 
             # 
             prompt_examples = [
-                ["Provide a paragraph for each company that summarizes the information from a financial perspective."],
+                ["Generate a paragraph that summarizes the given information from a financial perspective for the fiscal year end of December 2024."],
                 ["Summarize the information from a financial investment perspective."],
                 ["Summarize the potential financial investment risks and rewards."]
             ]
