@@ -17,11 +17,12 @@ from numpy.linalg import norm
 # https://ollama.readthedocs.io/en/latest/api.html
 
 # NOTE: ollama must be running for this to work, start the ollama app or run `ollama serve`
-model = 'all-minilm' # TODO: update this for whatever model you wish to use
 
+model = 'nomic-embed-text:latest'
+model = 'all-minilm:latest'
 
 def generate(input, context):
-    r = requests.post('http://ollama-ollama.apps.cluster-8q5hz.8q5hz.sandbox840.opentlc.com/api/embed',
+    r = requests.post('http://localhost:11434/api/embed',
                       json={
                           'model': model,
                           'input': input,
