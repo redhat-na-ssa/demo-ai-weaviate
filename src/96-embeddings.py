@@ -2,6 +2,7 @@ import json
 import requests
 import numpy as np
 from numpy.linalg import norm
+import os
 
 # This example shows how to use the Ollama API to generate embeddings for a given input
 # The embeddings are then used to calculate the cosine similarity between the embeddings
@@ -22,7 +23,8 @@ model = 'nomic-embed-text:latest'
 model = 'all-minilm:latest'
 
 def generate(input, context):
-    r = requests.post('http://localhost:11434/api/embed',
+    ollama_host = os.environ.get('OLLAMA_HOST', 'http://localhost:11434')
+    r = requests.post(f'{ollama_host}/api/embed',
                       json={
                           'model': model,
                           'input': input,
