@@ -52,7 +52,7 @@ based on the financial data from the original company overview database and not 
 - [Install a Weaviate instance](install-weaviate.md) in the `weaviate` namespace.
 
 ##### Install Ollama
-- Install an [Ollama model server](https://github.com/williamcaban/ollama-ubi) in the `ollama` namespace.
+- Install an [Ollama model server](https://github.com/bkoz/ollama) in the `ollama` namespace.
   - The `all-minilm` and `granite3-dense:8b` models should be [pulled](https://github.com/ollama/ollama/blob/main/docs/api.md#pull-a-model) after install. This can be done using `curl` or the `ollama` cli tool from an Openshift or DevSpaces terminal.
 
 ##### Stock Overview Ingestion Engine
