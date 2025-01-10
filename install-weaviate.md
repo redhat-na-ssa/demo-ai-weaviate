@@ -17,12 +17,9 @@ for Red Hat OpenShift a project will already exist.
 
 To check for the existence of a project run `oc project`, otherwise use `oc new-project` to create one.
 
-```bash
-PROJ=weaviate
-```
-
-```bash
-oc new-project $PROJ
+```sh
+PROJECT=weaviate
+oc new-project ${PROJECT}
 ```
 
 3) Begin by reviewing the [Weaviate Kubernetes Installation docs](https://weaviate.io/developers/weaviate/installation/kubernetes). As a quick start, use the [example helm chart values file](values.yaml)  in this repo.
@@ -40,34 +37,35 @@ oc new-project $PROJ
 
 - Add the weaviate repo to the helm configuration.
 
-```bash
+```sh
 helm repo add weaviate https://weaviate.github.io/weaviate-helm
 ```
 
 - Install Weaviate
 
-```bash
-helm upgrade --install weaviate weaviate/weaviate --namespace ${PROJ} --values ./values.yaml
+```sh
+helm upgrade --install weaviate weaviate/weaviate --namespace ${PROJECT} --values ./values.yaml
 ```
 
 5) Optionally, expose the Weaviate service as a route. If using DevSpaces you can use
 the weaviate service (<http://weaviate.weaviate>) directly.
 
-```bash
-oc create route edge weaviate --service=weaviate --insecure-policy='Redirect' -n $PROJ
+```sh
+oc create route edge weaviate --service=weaviate --insecure-policy='Redirect' -n ${PROJECT}
+
+WEAVIATE_HOST=$(oc get routes weaviate -n ${PROJECT} -o jsonpath='{.spec.host}')
 ```
 
 ### Test using the route
 
-```bash
-export WEAVIATE_HOST=$(oc get routes weaviate -n ${PROJ} -o jsonpath='{.spec.host}')
-curl https://"${WEAVIATE_HOST}" | jq .
+```sh
+export WEAVIATE_HOST
+curl -sL https://"${WEAVIATE_HOST}" | jq .
 ```
 
 ### Test using the service name
 
-```bash
-export WEAVIATE_HOST="https://" + $(oc get routes weaviate -n ${PROJ} -o jsonpath='{.spec.host}')
+```sh
 curl http://weaviate.weaviate | jq .
 ```
 
@@ -83,7 +81,7 @@ Sample output
 }
 ```
 
-1) Use the [Weaviate Cloud Console](https://console.weaviate.cloud/) to make GraphQL queries.
+1. Use the [Weaviate Cloud Console](https://console.weaviate.cloud/) to make GraphQL queries.
 
 - Add an OpenShift route for your external cluster.
 - Navigate to the query editor and configure the header as follows.
