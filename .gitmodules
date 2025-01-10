@@ -1,0 +1,3 @@
+[submodule "ollama"]
+	path = ollama
+	url = https://github.com/redhat-na-ssa/demo-ollama.git
