@@ -1,5 +1,5 @@
 ---
-version: '3.4'
+version: '3'
 services:
   weaviate:
     image: docker.io/semitechnologies/weaviate:latest
@@ -14,7 +14,7 @@ services:
       - 8080:8080
       - 50051:50051
     volumes:
-      - weaviate_data:/var/lib/weaviate
+      - weaviate-data:/var/lib/weaviate
     restart: on-failure:0
     environment:
       AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED: 'true'
@@ -24,4 +24,4 @@ services:
       PERSISTENCE_DATA_PATH: '/var/lib/weaviate'
       QUERY_DEFAULTS_LIMIT: 25
 volumes:
-  weaviate_data:
+  weaviate-data:
