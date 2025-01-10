@@ -88,7 +88,9 @@ python~https://github.com/redhat-na-ssa/demo-ai-weaviate \
 Expose the app with an external route and have fun.
 
 ```sh
-oc create route edge --service rag --insecure-policy='Redirect'
+oc create route edge \
+  --service rag \
+  --insecure-policy='Redirect'
 ```
 
 #### Automated Installation (work in progress)
@@ -96,7 +98,7 @@ oc create route edge --service rag --insecure-policy='Redirect'
 ### Clean up
 
 ```sh
-oc delete all --selector=app=rag
+oc delete all -l app=rag
 helm uninstall weaviate
 ```
 
