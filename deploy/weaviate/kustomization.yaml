@@ -10,5 +10,5 @@ resources:
 - secret.yaml
 - statefulset.yaml
 - svc-grpc.yaml
-# - svc-headless.yaml
+- svc-headless.yaml
 - svc.yaml
