@@ -1,0 +1,11 @@
+apiVersion: console.openshift.io/v1
+kind: ConsoleLink
+metadata:
+  name: github-demo-ai-weaviate
+spec:
+  href: 'https://github.com/redhat-na-ssa/demo-ai-weaviate'
+  location: ApplicationMenu
+  text: GitHub - Demo Weaviate
+  applicationMenu:
+    section: Git Repos
+    imageURL: /static/assets/public/imgs/logos/github.svg

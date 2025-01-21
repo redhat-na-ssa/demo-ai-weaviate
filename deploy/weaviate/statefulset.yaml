@@ -1,0 +1,136 @@
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: weaviate
+  labels:
+    name: weaviate
+    app: weaviate
+    app.kubernetes.io/name: weaviate
+spec:
+  replicas: 1
+  podManagementPolicy: Parallel
+  updateStrategy:
+    type: RollingUpdate
+  serviceName: weaviate-headless
+  selector:
+    matchLabels:
+      app: weaviate
+  template:
+    metadata:
+      labels:
+        app: weaviate
+        app.kubernetes.io/name: weaviate
+    spec:
+      containers:
+      - name: weaviate
+        image: 'cr.weaviate.io/semitechnologies/weaviate:1.27.8'
+        imagePullPolicy: IfNotPresent
+        command: 
+          - /bin/weaviate
+        args: 
+          - --host
+          - 0.0.0.0
+          - --port
+          - "8080"
+          - --scheme
+          - http
+          - --config-file
+          - /weaviate-config/conf.yaml
+          - --read-timeout=60s
+          - --write-timeout=60s
+        env:
+          - name: CLUSTER_DATA_BIND_PORT
+            value: "7001"
+          - name: CLUSTER_GOSSIP_BIND_PORT
+            value: "7000"
+          - name: GOGC
+            value: "100"
+          - name: PROMETHEUS_MONITORING_ENABLED
+            value: "false"
+          - name: PROMETHEUS_MONITORING_GROUP
+            value: "false"
+          - name: QUERY_MAXIMUM_RESULTS
+            value: "100000"
+          - name: RAFT_BOOTSTRAP_TIMEOUT
+            value: "600"
+          - name: REINDEX_VECTOR_DIMENSIONS_AT_STARTUP
+            value: "false"
+          - name: TRACK_VECTOR_DIMENSIONS
+            value: "false"
+          - name: CLUSTER_BASIC_AUTH_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: weaviate-cluster-api-basic-auth
+                key: username
+          - name: CLUSTER_BASIC_AUTH_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: weaviate-cluster-api-basic-auth
+                key: password
+          - name: PERSISTENCE_DATA_PATH
+            value: '/var/lib/weaviate'
+          - name: DEFAULT_VECTORIZER_MODULE
+            value: none
+          - name: RAFT_JOIN
+            value: "weaviate-0"
+          - name: RAFT_BOOTSTRAP_EXPECT
+            value: "1"
+          - name: CLUSTER_JOIN
+            value: weaviate-headless.openshift-machine-api.svc.cluster.local.
+        ports:
+          - containerPort: 7000
+          - containerPort: 8080
+          - name: grpc
+            containerPort: 50051
+            protocol: TCP
+        volumeMounts:
+          - name: weaviate-config
+            mountPath: /weaviate-config
+          - name: weaviate-data
+            mountPath: /var/lib/weaviate
+        livenessProbe:
+          httpGet:
+            path: /v1/.well-known/live
+            port: 8080
+          initialDelaySeconds: 900
+          periodSeconds: 10
+          failureThreshold: 30
+          successThreshold: 1
+          timeoutSeconds: 3
+        readinessProbe:
+          httpGet:
+            path: /v1/.well-known/ready
+            port: 8080
+          initialDelaySeconds: 3
+          periodSeconds: 10
+          failureThreshold: 3
+          successThreshold: 1
+          timeoutSeconds: 3
+      volumes:
+        - name: weaviate-config
+          configMap:
+            name: weaviate-config
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - weaviate
+              topologyKey: kubernetes.io/hostname
+            weight: 1
+  volumeClaimTemplates:
+  - metadata:
+      name: weaviate-data
+      labels:
+        app.kubernetes.io/name: weaviate
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: 
+      resources:
+        requests:
+          storage: 32Gi
