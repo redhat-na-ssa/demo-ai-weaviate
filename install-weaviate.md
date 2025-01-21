@@ -8,27 +8,9 @@ Running [Weaviate](https://weaviate.io/) on Red Hat OpenShift
 oc apply -k deploy
 ```
 
-## My test enviroment
+## Links
 
-- OpenShift (v4.13.6)
-- [`helm`](https://helm.sh/docs/intro/install/) (v3.8.1)
-- A workstation to run the `oc` and `helm` [command line tools](https://mirror.openshift.com/pub/openshift-v4/clients/).
-
-### Installation
-
-1) Install the `oc` and [`helm`](https://helm.sh/docs/intro/install/) programs on your client workstation.
-
-2) Login to OpenShift and create a new project with a unique name. If you are using the Developer Sandbox
-for Red Hat OpenShift a project will already exist.
-
-To check for the existence of a project run `oc project`, otherwise use `oc new-project` to create one.
-
-```sh
-PROJECT=weaviate
-oc new-project ${PROJECT}
-```
-
-3) Begin by reviewing the [Weaviate Kubernetes Installation docs](https://weaviate.io/developers/weaviate/installation/kubernetes). As a quick start, use the [example helm chart values file](values.yaml)  in this repo.
+- [Weaviate Kubernetes Installation Docs](https://weaviate.io/developers/weaviate/installation/kubernetes).
 
 - Configuration options
   - Set your desired api keys by renaming the default values in the example `values.yaml` file. See lines 153 - 154.
@@ -39,21 +21,19 @@ oc new-project ${PROJECT}
     - `text2vec-openai`
     - `generative-openai`
 
-4) Configure and run the helm installer and wait for the weaviate pod to become ready.
-
-- Add the weaviate repo to the helm configuration.
+Add the weaviate repo to the helm configuration.
 
 ```sh
 helm repo add weaviate https://weaviate.github.io/weaviate-helm
 ```
 
-- Install Weaviate
+Install Weaviate
 
 ```sh
 helm upgrade --install weaviate weaviate/weaviate --namespace ${PROJECT} --values ./values.yaml
 ```
 
-5) Optionally, expose the Weaviate service as a route. If using DevSpaces you can use
+- Optionally, expose the Weaviate service as a route. If using DevSpaces you can use
 the weaviate service (<http://weaviate.weaviate>) directly.
 
 ```sh
@@ -87,7 +67,7 @@ Sample output
 }
 ```
 
-1. Use the [Weaviate Cloud Console](https://console.weaviate.cloud/) to make GraphQL queries.
+### Use the [Weaviate Cloud Console](https://console.weaviate.cloud/) to make GraphQL queries
 
 - Add an OpenShift route for your external cluster.
 - Navigate to the query editor and configure the header as follows.
