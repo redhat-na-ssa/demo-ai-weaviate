@@ -43,7 +43,7 @@ based on the financial data from the original company overview database and not 
 - An [AlphaVantage API key](https://www.alphavantage.co/support/#api-key)
   - This is optional if you want to refresh the stock symbol data.
 
-## Manual Installation Steps
+## Installation Steps
 
 ### Install the following services on OpenShift
 
@@ -54,9 +54,17 @@ based on the financial data from the original company overview database and not 
 
 #### Install Weaviate
 
+```sh
+oc apply -k deploy
+```
+
 - [Install a Weaviate instance](install-weaviate.md) in the `weaviate` namespace.
 
 #### Install Ollama
+
+```sh
+oc apply -k ollama/deploy
+```
 
 - Install an [Ollama model server](https://github.com/redhat-na-ssa/demo-ollama) in the `ollama` namespace.
   - The `all-minilm` and `granite3-dense:8b` models should be [pulled](https://github.com/ollama/ollama/blob/main/docs/api.md#pull-a-model) after install. This can be done using `curl` or the `ollama` cli tool from an OpenShift or DevSpaces terminal.
