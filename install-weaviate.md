@@ -12,6 +12,8 @@ oc apply -k deploy
 
 - [Weaviate Kubernetes Installation Docs](https://weaviate.io/developers/weaviate/installation/kubernetes).
 
+## Outdated Notes
+
 - Configuration options
   - Set your desired api keys by renaming the default values in the example `values.yaml` file. See lines 153 - 154.
   - You may want to increase the storage `size` to something larger. See line 88.
