@@ -10,7 +10,15 @@ data:
     ---
     authentication:
       anonymous_access:
+        enabled: false
+      apikey:
+        allowed_keys:
+        - abc123xyz-readOnly-plainText-API-Key
+        - abc123xyz-admin-plainText-API-Key
         enabled: true
+        users:
+        - api-key-user-readOnly
+        - api-key-user-admin
       oidc:
         enabled: false
     authorization:
