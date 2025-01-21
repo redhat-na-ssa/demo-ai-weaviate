@@ -1,69 +1,64 @@
 # weaviate
 
-Running [Weaviate](https://weaviate.io/) on Red Hat Openshift
+Running [Weaviate](https://weaviate.io/) on Red Hat OpenShift
 
-## My test enviroment
-- Openshift (v4.13.6)
-- [`helm`](https://helm.sh/docs/intro/install/) (v3.8.1)
-- A workstation to run the `oc` and `helm` [command line tools](https://mirror.openshift.com/pub/openshift-v4/clients/).
+## Quickstart
 
-### Installation
-1) Install the `oc` and [`helm`](https://helm.sh/docs/intro/install/) programs on your client workstation.
-
-2) Login to Openshift and create a new project with a unique name. If you are using the Developer Sandbox 
-for Red Hat Openshift a project will already exist.
-
-To check for the existence of a project run `oc project`, otherwise use `oc new-project` to create one.
-
-```bash
-PROJ=weaviate
+```sh
+oc apply -k deploy
 ```
 
-```bash
-oc new-project $PROJ
-```
+## Links
 
-3) Begin by reviewing the [Weaviate Kubernetes Installation docs](https://weaviate.io/developers/weaviate/installation/kubernetes). As a quick start, use the [example helm chart values file](values.yaml)  in this repo.
-  - Configuration options
-    - Set your desired api keys by renaming the default values in the example `values.yaml` file. See lines 153 - 154.
-    - You may want to increase the storage `size` to something larger. See line 88.
-    - This example `values.yaml` enables the following sections:
-        - `apikey`
-        - `text2vec-huggingface`
-        - `text2vec-openai`
-        - `generative-openai`
+- [Weaviate Kubernetes Installation Docs](https://weaviate.io/developers/weaviate/installation/kubernetes).
 
-4) Configure and run the helm installer and wait for the weaviate pod to become ready.
+## Outdated Notes
 
-- Add the weaviate repo to the helm configuration.
+- Configuration options
+  - Set your desired api keys by renaming the default values in the example `values.yaml` file. See lines 153 - 154.
+  - You may want to increase the storage `size` to something larger. See line 88.
+  - This example `values.yaml` enables the following sections:
+    - `apikey`
+    - `text2vec-huggingface`
+    - `text2vec-openai`
+    - `generative-openai`
 
-```bash
+Add the weaviate repo to the helm configuration.
+
+```sh
 helm repo add weaviate https://weaviate.github.io/weaviate-helm
 ```
-- Install Weaviate
-```bash
-helm upgrade --install weaviate weaviate/weaviate --namespace ${PROJ} --values ./values.yaml
+
+Install Weaviate
+
+```sh
+helm upgrade --install weaviate weaviate/weaviate --namespace ${PROJECT} --values ./values.yaml
 ```
 
-5) Optionally, expose the Weaviate service as a route. If using DevSpaces you can use 
-the weaviate service (http://weaviate.weaviate) directly.
-```bash
-oc create route edge weaviate --service=weaviate --insecure-policy='Redirect' -n $PROJ
+- Optionally, expose the Weaviate service as a route. If using DevSpaces you can use
+the weaviate service (<http://weaviate.weaviate>) directly.
+
+```sh
+oc create route edge weaviate --service=weaviate --insecure-policy='Redirect' -n ${PROJECT}
+
+WEAVIATE_HOST=$(oc get routes weaviate -n ${PROJECT} -o jsonpath='{.spec.host}')
 ```
 
-### Test using the route.
-```bash
-export WEAVIATE_HOST=$(oc get routes weaviate -n ${PROJ} -o jsonpath='{.spec.host}')
-curl https://"${WEAVIATE_HOST}" | jq .
+### Test using the route
+
+```sh
+export WEAVIATE_HOST
+curl -sL https://"${WEAVIATE_HOST}" | jq .
 ```
 
-### Test using the service name. 
-```bash
-export WEAVIATE_HOST="https://" + $(oc get routes weaviate -n ${PROJ} -o jsonpath='{.spec.host}')
+### Test using the service name
+
+```sh
 curl http://weaviate.weaviate | jq .
 ```
 
 Sample output
+
 ```json
 {
   "links": {
@@ -73,10 +68,12 @@ Sample output
   }
 }
 ```
-1) Use the [Weaviate Cloud Console](https://console.weaviate.cloud/) to make GraphQL queries.
 
-- Add an Openshift route for your external cluster.
+### Use the [Weaviate Cloud Console](https://console.weaviate.cloud/) to make GraphQL queries
+
+- Add an OpenShift route for your external cluster.
 - Navigate to the query editor and configure the header as follows.
+
 ```json
 {
   "Authorization" : "Bearer my-weaviate-api-key",
@@ -85,6 +82,7 @@ Sample output
 ```
 
 - Enter the following sample GraphQL:
+
 ```json
 {
   Get {
@@ -102,6 +100,7 @@ Sample output
 ```
 
 Example output
+
 ```json
 {
   "data": {

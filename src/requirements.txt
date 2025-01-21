@@ -1,8 +1,9 @@
-weaviate-client
-python-dotenv
-gradio
-pyarrow
-pandas
-boto
-ijson
-wget
+boto==2.*
+gradio==5.*
+gradio_client==1.*
+ijson==3.*
+pandas==2.*
+pyarrow==18.*
+python-dotenv==1.*
+weaviate-client==4.*
+wget==3.*
