@@ -2,6 +2,12 @@
 
 Running [Weaviate](https://weaviate.io/) on Red Hat OpenShift
 
+## Quickstart
+
+```sh
+oc apply -k deploy
+```
+
 ## My test enviroment
 
 - OpenShift (v4.13.6)
