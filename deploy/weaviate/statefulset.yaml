@@ -72,6 +72,8 @@ spec:
             value: '/var/lib/weaviate'
           - name: DEFAULT_VECTORIZER_MODULE
             value: none
+          - name: ENABLE_MODULES
+            value: 'generative-ollama,text2vec-ollama'
           - name: RAFT_JOIN
             value: "weaviate-0"
           - name: RAFT_BOOTSTRAP_EXPECT
