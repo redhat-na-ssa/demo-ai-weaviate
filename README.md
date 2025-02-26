@@ -41,7 +41,7 @@ based on the financial data from the original company overview database and not 
 
 - `cluster-admin` access to [Red Hat OpenShift](https://developers.redhat.com/developer-sandbox)
 - An [AlphaVantage API key](https://www.alphavantage.co/support/#api-key)
-  - This is optional if you want to refresh the stock symbol data.
+  - This is optional if you want to refresh the stock symbol data. The key gets set in `src/main/jkube/secret.yml` which is a copy of [this template](https://github.com/joshdreagan/av-overview-sync/blob/master/src/main/jkube/secret.yml.template#L6)
 
 ## Installation Steps
 
