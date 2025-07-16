@@ -84,6 +84,9 @@ the `camel` namespace. Configure the `av-overview-sync-configmap` configmap to u
 #### Deploy the application
 
 From a terminal, create an OpenShift application.
+```bash
+oc new-project rag
+```
 
 ```sh
 oc new-app \
