@@ -114,9 +114,9 @@ if __name__ == '__main__':
     try:
         download_data()
 
-        ollama_api_endpoint = os.getenv("OLLAMA_HOST", "http://ollama-svc.ollama")
+        ollama_api_endpoint = os.getenv("OLLAMA_HOST", "http://ollama.ollama")
         ollama_vectorizer_model = model = os.getenv("OLLAMA_VECTORIZER", "all-minilm")
-        ollama_generative_model = os.getenv("OLLAMA_LLM","llama3:8b-instruct-q8_0")
+        ollama_generative_model = os.getenv("OLLAMA_LLM","granite3.3:latest")
         weaviate_host = os.getenv("WEAVIATE_HOST", "weaviate.weaviate")
         weaviate_key = os.getenv("WEAVIATE_API_KEY")
 
@@ -145,7 +145,7 @@ if __name__ == '__main__':
         ingest_data(client)
 
         symbols = client.collections.get("Symbols")
-        # logging.info(f'symbols: {symbols}')
+        logging.info(f'symbols: {symbols}')
 
         if client.is_ready():
             logging.info('')

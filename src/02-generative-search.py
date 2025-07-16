@@ -8,6 +8,20 @@ import ijson
 import wget
 import logging
 
+def generative_search(symbols, query='computers', task=None, limit=2) -> str:
+    print(f'\nPerforming generative search, query = {query}, limit = {limit}.')
+    print(f'Prompt: {task}')
+    print(f'limit = {limit}')
+    response = symbols.generate.near_text(
+        query=query,
+        limit=limit,
+        grouped_task=task
+    )
+
+    print(f'response = {response.generated}')
+
+    return response.generated
+
 def semantic_search(symbols, query='computers', limit=2) -> dict:
     logging.info(f'\nSemantic Search, query = {query}.')
     logging.info(f'limit = {limit}')
@@ -46,13 +60,18 @@ if __name__ == '__main__':
         grpc_port=50051,
         grpc_secure=False,
         skip_init_checks=True,
-        # headers={"X-OpenAI-Api-key": os.getenv("OPENAI_API_KEY"),
-        #          "X-Huggingface-Api-key": os.getenv("HUGGINGFACE_API_KEY")}
-        )
+        # additional_config=AdditionalConfig(
+        #     timeout=Timeout(init=30, query=60, insert=120)  # Values in seconds
+        #     )
+    )
 
         symbols = client.collections.get("Symbols")
         logging.debug(f'symbols: {symbols}')
-        logging.info(semantic_search(symbols))
+
+        query = "computers"
+        limit = 1
+        logging.info(semantic_search(symbols, query = query, limit = limit))
+        logging.info(generative_search(symbols, query = query, task = "Summarize the information from a financial investment perspective", limit = limit))
     except:
         logging.error('Connection to Weaviate failed!')
         quit(1)

@@ -10,11 +10,6 @@ import gradio as gr
 import logging
 
 def connect_weaviate_custom():
-    # weaviate_host = os.getenv("WEAVIATE_HOST", "weaviate.weavate")     
-    # weaviate_key = os.getenv("WEAVIATE_API_KEY")
-
-    # logging.basicConfig(level=logging.INFO)
-    # logging.info(f'OLLAMA_API_ENDPOINT = {ollama_api_endpoint}')
     if weaviate_key == None:
         logging.error('')
         logging.error('WEAVIATE_API_KEY not set!')
@@ -47,6 +42,8 @@ def semantic_search(query='computers', limit=2) -> dict:
         limit=limit
     )
 
+    print(f'response = {response}')
+
     return_list = []
     for i in range(limit):
         return_list.append(response.objects[i].properties['name'])
@@ -62,6 +59,9 @@ def generative_search(query='computers', task=None, limit=2) -> str:
         limit=limit,
         grouped_task=task
     )
+
+    print(f'response = {response.generated}')
+
     return response.generated
 
  
