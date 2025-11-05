@@ -6,3 +6,4 @@ pandas
 boto
 ijson
 wget
+requests
