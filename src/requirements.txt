@@ -1,6 +1,7 @@
 weaviate-client
 python-dotenv
-gradio
+gradio==5.*
+gradio_client==1.*
 pyarrow
 pandas
 boto
