@@ -69,7 +69,20 @@ oc apply -k ollama/deploy
 - Install an [Ollama model server](https://github.com/redhat-na-ssa/demo-ollama) in the `ollama` namespace.
   - The `all-minilm` and `granite3-dense:8b` models should be [pulled](https://github.com/ollama/ollama/blob/main/docs/api.md#pull-a-model) after install. This can be done using `curl` or the `ollama` cli tool from an OpenShift or DevSpaces terminal.
 
-#### Stock Overview Ingestion Engine
+```bash
+curl http://ollama.ollama/api/pull -d '{"model": "granite3-dense:8b"}'
+curl http://ollama.ollama/api/pull -d '{"model": "all-minilm"}'
+```
+
+```bash
+curl http://ollama.ollama/api/embed -d '{ "model": "all-minilm", "input": "Why is the sky blue?" }'
+```
+
+```bash
+curl http://ollama.ollama/api/generate -d '{ "model": "granite3-dense:8b", "prompt": "Why is the sky blue?", "stream": false }'
+```
+
+##### Stock Overview Ingestion Engine
 
 The stock overview ingestion engine consists of two components.
 
