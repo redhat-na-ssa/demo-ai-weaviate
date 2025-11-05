@@ -7,9 +7,8 @@ metadata:
     controller.devfile.io/watch-secret: 'true'
   annotations:
     controller.devfile.io/mount-as: env
-data:
-  WEAVIATE_API_KEY: Y2hhbmdlX21l
-  WEAVIATE_HOST: d2VhdmlhdGUud2VhdmlhdGU=
-  OLLAMA_HOST: aHR0cDovL29sbGFtYS5vbGxhbWE6MTE0MzQ=
+stringData:
+  WEAVIATE_API_KEY: changeme
+  WEAVIATE_HOST: changeme
+  OLLAMA_HOST: changeme
 type: Opaque
-

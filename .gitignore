@@ -1,3 +1,7 @@
+# custom paths
+scratch/
+data/
+
 # JSON data files
 symbols*.json
 

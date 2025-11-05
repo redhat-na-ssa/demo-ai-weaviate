@@ -16,9 +16,9 @@ import weaviate
 # export WEAVIATE_HOST=weaviate.weaviate
 # export OLLAMA_API_ENDPOINT=https://my-ollama-api-server.domain.com
 
-ollama_api_endpoint = os.getenv("OLLAMA_API_ENDPOINT", "http://localhost:11434")
+ollama_api_endpoint = os.getenv("OLLAMA_API_ENDPOINT", "http://ollama.ollama:80")
 ollama_vectorizer_model = model = "all-minilm"
-ollama_generative_model="llama3"
+ollama_generative_model="granite3.3:latest"
 
 logging.basicConfig(level=logging.INFO)
 logging.info(f'OLLAMA_API_ENDPOINT = {ollama_api_endpoint}')
@@ -56,8 +56,8 @@ def connect_weaviate_embedded():
     )
     return client
 
-# client = connect_weaviate_custom()
-client = connect_weaviate_embedded()
+client = connect_weaviate_custom()
+# client = connect_weaviate_embedded()
 
 if client.is_ready():
     logging.info('')
