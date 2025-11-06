@@ -78,7 +78,7 @@ oc apply -k ollama/deploy
   - The `all-minilm` and `granite3-dense:8b` models should be [pulled](https://github.com/ollama/ollama/blob/main/docs/api.md#pull-a-model) after install. This can be done using `curl` or the `ollama` cli tool from an OpenShift or DevSpaces terminal.
 
 ```bash
-curl http://ollama.ollama/api/pull -d '{"model": "granite3-dense:8b"}'
+curl http://ollama.ollama/api/pull -d '{"model": "granite3.3:latest"}'
 curl http://ollama.ollama/api/pull -d '{"model": "all-minilm"}'
 ```
 
