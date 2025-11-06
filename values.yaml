@@ -1183,7 +1183,7 @@ modules:
   text2vec-ollama:
 
     # enable if you want to use Ollama module
-    enabled: false
+    enabled: true
 
   # The text2vec-octoai module uses OctoAI Embeddings API
   # to dynamically compute vector embeddings based on the
@@ -1692,7 +1692,7 @@ modules:
   generative-ollama:
 
     # enable if you want to use Ollama module
-    enabled: false
+    enabled: true
 
   # The generative-octoai module uses OctoAI API.
   # More information about OctoAI API can be found here:
