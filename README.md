@@ -132,6 +132,9 @@ oc create route edge \
 ```sh
 oc delete all -l app=rag
 helm uninstall weaviate
+oc delete project camel
+oc delete project weaviate
+oc delete project rag
 ```
 
 ### Remove the OpenShift storage
