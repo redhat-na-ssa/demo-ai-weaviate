@@ -43,6 +43,14 @@ based on the financial data from the original company overview database and not 
 - An [AlphaVantage API key](https://www.alphavantage.co/support/#api-key)
   - This is optional if you want to refresh the stock symbol data. The key gets set in `src/main/jkube/secret.yml` which is a copy of [this template](https://github.com/joshdreagan/av-overview-sync/blob/master/src/main/jkube/secret.yml.template#L6)
 
+### Tested Versions
+
+- Weaviate server image tag: `1.33.1`
+- weaviate-client==4.17.0
+- gradio==5.49.1
+- gradio_client==1.13.3 (What's the difference?)
+- camel uses `granite3.3:latest`
+
 ## Installation Steps
 
 ### Install the following services on OpenShift
